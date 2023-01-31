@@ -44,6 +44,30 @@ public class FacultyEntity {
         }
     }
 
+    public Long getID() {
+        return iD;
+    }
+
+    public void setID(Long iD) {
+        this.iD = iD;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
     @Override
     public String toString() {
         return "FacultyEntity{" +

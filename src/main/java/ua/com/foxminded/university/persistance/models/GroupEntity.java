@@ -44,6 +44,30 @@ public class GroupEntity {
         }
     }
 
+    public Long getID() {
+        return iD;
+    }
+
+    public void setID(Long iD) {
+        this.iD = iD;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getFacultyID() {
+        return facultyID;
+    }
+
+    public void setFacultyID(Long facultyID) {
+        this.facultyID = facultyID;
+    }
+
     @Override
     public String toString() {
         return "GroupEntity{" +

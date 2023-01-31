@@ -85,6 +85,62 @@ public class LessonEntity {
 
     }
 
+    public Long getID() {
+        return iD;
+    }
+
+    public void setID(Long iD) {
+        this.iD = iD;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public ZonedDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(ZonedDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Long getSubjectID() {
+        return subjectID;
+    }
+
+    public void setSubjectID(Long subjectID) {
+        this.subjectID = subjectID;
+    }
+
+    public Long getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(Long groupID) {
+        this.groupID = groupID;
+    }
+
+    public Long getTeacherID() {
+        return teacherID;
+    }
+
+    public void setTeacherID(Long teacherID) {
+        this.teacherID = teacherID;
+    }
+
     @Override
     public String toString() {
         return "LessonEntity{" +
@@ -111,5 +167,3 @@ public class LessonEntity {
         return Objects.hash(iD, name, duration, startTime, subjectID, groupID, teacherID);
     }
 }
-
-

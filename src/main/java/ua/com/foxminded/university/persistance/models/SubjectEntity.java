@@ -46,6 +46,30 @@ public class SubjectEntity {
         }
     }
 
+    public Long getID() {
+        return iD;
+    }
+
+    public void setID(Long iD) {
+        this.iD = iD;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "SubjectEntity{" +

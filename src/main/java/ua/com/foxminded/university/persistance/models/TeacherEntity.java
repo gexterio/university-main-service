@@ -76,6 +76,70 @@ public class TeacherEntity {
         }
     }
 
+    public Long getID() {
+        return iD;
+    }
+
+    public void setID(Long iD) {
+        this.iD = iD;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Byte getAge() {
+        return age;
+    }
+
+    public void setAge(Byte age) {
+        this.age = age;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public Integer getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getFacultyID() {
+        return facultyID;
+    }
+
+    public void setFacultyID(Long facultyID) {
+        this.facultyID = facultyID;
+    }
+
     @Override
     public String toString() {
         return "TeacherEntity{" +
