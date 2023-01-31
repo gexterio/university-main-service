@@ -1,6 +1,8 @@
 package ua.com.foxminded.university.consumer.dto;
 
 
+import ua.com.foxminded.university.persistance.models.SubjectEntity;
+
 import java.util.Objects;
 
 public class SubjectDTO {
@@ -19,6 +21,12 @@ public class SubjectDTO {
         this.iD = builder.iD;
         this.name = builder.name;
         this.description = builder.description;
+    }
+
+    public SubjectDTO(SubjectEntity entity) {
+        this.iD = entity.getID();
+        this.name = entity.getName();
+        this.description = entity.getDescription();
     }
 
     public static class SubjectDTOBuilder {

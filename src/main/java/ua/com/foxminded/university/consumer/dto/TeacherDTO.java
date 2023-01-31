@@ -1,6 +1,8 @@
 package ua.com.foxminded.university.consumer.dto;
 
 
+import ua.com.foxminded.university.persistance.models.TeacherEntity;
+
 import java.util.Objects;
 
 public class TeacherDTO {
@@ -29,6 +31,17 @@ public class TeacherDTO {
         this.email = builder.email;
         this.facultyID = builder.facultyID;
         this.facultyName = builder.facultyName;
+    }
+
+    public TeacherDTO(TeacherEntity entity) {
+        this.iD = entity.getID();
+        this.firstName = entity.getFirstName();
+        this.lastName = entity.getLastName();
+        this.age = entity.getAge();
+        this.grade = entity.getGrade();
+        this.experience = entity.getExperience();
+        this.email = entity.getEmail();
+        this.facultyID = entity.getFacultyID();
     }
 
     public static class TeacherDTOBuilder {

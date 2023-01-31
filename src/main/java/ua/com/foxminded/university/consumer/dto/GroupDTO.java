@@ -1,5 +1,7 @@
 package ua.com.foxminded.university.consumer.dto;
 
+import ua.com.foxminded.university.persistance.models.GroupEntity;
+
 import java.util.Objects;
 
 public class GroupDTO {
@@ -20,6 +22,12 @@ public class GroupDTO {
         this.name = builder.name;
         this.facultyID = builder.facultyID;
         this.facultyName = builder.facultyName;
+    }
+
+    public GroupDTO(GroupEntity entity) {
+        this.iD = entity.getID();
+        this.name = entity.getName();
+        this.facultyID = entity.getFacultyID();
     }
 
     public static class GroupDTOBuilder {
