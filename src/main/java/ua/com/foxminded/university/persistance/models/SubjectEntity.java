@@ -15,7 +15,7 @@ public class SubjectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long iD;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "description")
@@ -25,14 +25,14 @@ public class SubjectEntity {
     }
 
     public SubjectEntity(SubjectEntityBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
     }
 
     public static class SubjectEntityBuilder {
 
-        private Long iD;
+        private Long id;
 
         private final String name;
 
@@ -47,8 +47,8 @@ public class SubjectEntity {
             return this;
         }
 
-        public SubjectEntityBuilder setID(Long iD) {
-            this.iD = iD;
+        public SubjectEntityBuilder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -57,12 +57,12 @@ public class SubjectEntity {
         }
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -84,7 +84,7 @@ public class SubjectEntity {
     @Override
     public String toString() {
         return "SubjectEntity{" +
-                "iD=" + iD +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
@@ -95,11 +95,11 @@ public class SubjectEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubjectEntity that = (SubjectEntity) o;
-        return Objects.equals(iD, that.iD) && name.equals(that.name) && Objects.equals(description, that.description);
+        return Objects.equals(id, that.id) && name.equals(that.name) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, name, description);
+        return Objects.hash(id, name, description);
     }
 }

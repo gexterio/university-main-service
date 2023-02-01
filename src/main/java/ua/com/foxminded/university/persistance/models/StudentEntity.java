@@ -14,7 +14,7 @@ public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long iD;
+    private Long id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -33,7 +33,7 @@ public class StudentEntity {
     }
 
     public StudentEntity(StudentEntityBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.age = builder.age;
@@ -43,7 +43,7 @@ public class StudentEntity {
     }
 
     public static class StudentEntityBuilder {
-        private Long iD;
+        private Long id;
 
         private final String firstName;
 
@@ -63,8 +63,8 @@ public class StudentEntity {
             this.lastName = lastName;
         }
 
-        public StudentEntityBuilder setID(Long iD) {
-            this.iD = iD;
+        public StudentEntityBuilder setID(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -93,12 +93,12 @@ public class StudentEntity {
         }
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -152,7 +152,7 @@ public class StudentEntity {
     @Override
     public String toString() {
         return "StudentEntity{" +
-                "iD=" + iD +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
@@ -167,11 +167,11 @@ public class StudentEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentEntity that = (StudentEntity) o;
-        return Objects.equals(iD, that.iD) && firstName.equals(that.firstName) && lastName.equals(that.lastName) && Objects.equals(age, that.age) && Objects.equals(groupId, that.groupId) && Objects.equals(course, that.course) && Objects.equals(email, that.email);
+        return Objects.equals(id, that.id) && firstName.equals(that.firstName) && lastName.equals(that.lastName) && Objects.equals(age, that.age) && Objects.equals(groupId, that.groupId) && Objects.equals(course, that.course) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, firstName, lastName, age, groupId, course, email);
+        return Objects.hash(id, firstName, lastName, age, groupId, course, email);
     }
 }

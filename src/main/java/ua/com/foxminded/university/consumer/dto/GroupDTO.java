@@ -6,11 +6,11 @@ import java.util.Objects;
 
 public class GroupDTO {
 
-    private Long iD;
+    private Long id;
 
     private String name;
 
-    private Long facultyID;
+    private Long facultyId;
 
     private String facultyName;
 
@@ -18,25 +18,25 @@ public class GroupDTO {
     }
 
     public GroupDTO(GroupDTOBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.name = builder.name;
-        this.facultyID = builder.facultyID;
+        this.facultyId = builder.facultyId;
         this.facultyName = builder.facultyName;
     }
 
     public GroupDTO(GroupEntity entity) {
-        this.iD = entity.getID();
+        this.id = entity.getId();
         this.name = entity.getName();
-        this.facultyID = entity.getFacultyID();
+        this.facultyId = entity.getFacultyId();
     }
 
     public static class GroupDTOBuilder {
 
-        private Long iD;
+        private Long id;
 
         private String name;
 
-        private Long facultyID;
+        private Long facultyId;
 
         private String facultyName;
 
@@ -46,8 +46,8 @@ public class GroupDTO {
             return this;
         }
 
-        public GroupDTOBuilder setFacultyID(Long iD) {
-            this.facultyID = iD;
+        public GroupDTOBuilder setFacultyId(Long id) {
+            this.facultyId = id;
             return this;
         }
 
@@ -56,8 +56,8 @@ public class GroupDTO {
             return this;
         }
 
-        public GroupDTOBuilder setID(Long iD) {
-            this.iD = iD;
+        public GroupDTOBuilder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -66,12 +66,12 @@ public class GroupDTO {
         }
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -82,12 +82,12 @@ public class GroupDTO {
         this.name = name;
     }
 
-    public Long getFacultyID() {
-        return facultyID;
+    public Long getFacultyId() {
+        return facultyId;
     }
 
-    public void setFacultyID(Long facultyID) {
-        this.facultyID = facultyID;
+    public void setFacultyId(Long facultyId) {
+        this.facultyId = facultyId;
     }
 
     public String getFacultyName() {
@@ -101,9 +101,9 @@ public class GroupDTO {
     @Override
     public String toString() {
         return "GroupDTO{" +
-                "iD=" + iD +
+                "id=" + id +
                 ", name='" + name + '\'' +
-                ", facultyID=" + facultyID +
+                ", facultyId=" + facultyId +
                 ", facultyName='" + facultyName + '\'' +
                 '}';
     }
@@ -113,11 +113,11 @@ public class GroupDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupDTO groupDTO = (GroupDTO) o;
-        return Objects.equals(iD, groupDTO.iD) && Objects.equals(name, groupDTO.name) && Objects.equals(facultyID, groupDTO.facultyID) && Objects.equals(facultyName, groupDTO.facultyName);
+        return Objects.equals(id, groupDTO.id) && Objects.equals(name, groupDTO.name) && Objects.equals(facultyId, groupDTO.facultyId) && Objects.equals(facultyName, groupDTO.facultyName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, name, facultyID, facultyName);
+        return Objects.hash(id, name, facultyId, facultyName);
     }
 }

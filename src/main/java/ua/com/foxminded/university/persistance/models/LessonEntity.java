@@ -16,7 +16,7 @@ public class LessonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long iD;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "duration")
@@ -24,48 +24,48 @@ public class LessonEntity {
     @Column(name = "start_time")
     private ZonedDateTime startTime;
     @Column(name = "subject_id")
-    private Long subjectID;
+    private Long subjectId;
     @Column(name = "group_id")
-    private Long groupID;
+    private Long groupId;
     @Column(name = "teacher_id")
-    private Long teacherID;
+    private Long teacherId;
 
     public LessonEntity() {
 
     }
 
     public LessonEntity(LessonEntityBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.name = builder.name;
         this.duration = builder.duration;
         this.startTime = builder.startTime;
-        this.subjectID = builder.subjectID;
-        this.groupID = builder.groupID;
-        this.teacherID = builder.teacherID;
+        this.subjectId = builder.subjectId;
+        this.groupId = builder.groupId;
+        this.teacherId = builder.teacherId;
     }
 
     public static class LessonEntityBuilder {
 
-        private Long iD;
+        private Long id;
         private final String name;
 
         private Integer duration;
 
         private ZonedDateTime startTime;
 
-        private final Long subjectID;
+        private final Long subjectId;
 
-        private Long groupID;
+        private Long groupId;
 
-        private Long teacherID;
+        private Long teacherId;
 
-        public LessonEntityBuilder(String name, Long subjectID) {
+        public LessonEntityBuilder(String name, Long subjectId) {
             this.name = name;
-            this.subjectID = subjectID;
+            this.subjectId = subjectId;
         }
 
-        public LessonEntityBuilder setID(Long iD) {
-            this.iD = iD;
+        public LessonEntityBuilder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -79,13 +79,13 @@ public class LessonEntity {
             return this;
         }
 
-        public LessonEntityBuilder setGroupID(Long groupID) {
-            this.groupID = groupID;
+        public LessonEntityBuilder setGroupId(Long groupId) {
+            this.groupId = groupId;
             return this;
         }
 
-        public LessonEntityBuilder setTeacherID(Long teacherID) {
-            this.teacherID = teacherID;
+        public LessonEntityBuilder setTeacherId(Long teacherId) {
+            this.teacherId = teacherId;
             return this;
         }
 
@@ -95,12 +95,12 @@ public class LessonEntity {
 
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -127,40 +127,40 @@ public class LessonEntity {
         this.startTime = startTime;
     }
 
-    public Long getSubjectID() {
-        return subjectID;
+    public Long getSubjectId() {
+        return subjectId;
     }
 
-    public void setSubjectID(Long subjectID) {
-        this.subjectID = subjectID;
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
     }
 
-    public Long getGroupID() {
-        return groupID;
+    public Long getGroupId() {
+        return groupId;
     }
 
-    public void setGroupID(Long groupID) {
-        this.groupID = groupID;
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
-    public Long getTeacherID() {
-        return teacherID;
+    public Long getTeacherId() {
+        return teacherId;
     }
 
-    public void setTeacherID(Long teacherID) {
-        this.teacherID = teacherID;
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
     }
 
     @Override
     public String toString() {
         return "LessonEntity{" +
-                "iD=" + iD +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", duration=" + duration +
                 ", startTime=" + startTime +
-                ", subjectID=" + subjectID +
-                ", groupID=" + groupID +
-                ", teacherID=" + teacherID +
+                ", subjectId=" + subjectId +
+                ", groupId=" + groupId +
+                ", teacherId=" + teacherId +
                 '}';
     }
 
@@ -169,11 +169,11 @@ public class LessonEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LessonEntity that = (LessonEntity) o;
-        return Objects.equals(iD, that.iD) && name.equals(that.name) && Objects.equals(duration, that.duration) && startTime.equals(that.startTime) && Objects.equals(subjectID, that.subjectID) && Objects.equals(groupID, that.groupID) && Objects.equals(teacherID, that.teacherID);
+        return Objects.equals(id, that.id) && name.equals(that.name) && Objects.equals(duration, that.duration) && startTime.equals(that.startTime) && Objects.equals(subjectId, that.subjectId) && Objects.equals(groupId, that.groupId) && Objects.equals(teacherId, that.teacherId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, name, duration, startTime, subjectID, groupID, teacherID);
+        return Objects.hash(id, name, duration, startTime, subjectId, groupId, teacherId);
     }
 }

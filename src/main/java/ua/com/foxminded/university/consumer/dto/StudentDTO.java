@@ -5,7 +5,7 @@ import ua.com.foxminded.university.persistance.models.StudentEntity;
 import java.util.Objects;
 
 public class StudentDTO {
-    private Long iD;
+    private Long id;
 
     private String firstName;
 
@@ -26,7 +26,7 @@ public class StudentDTO {
     }
 
     public StudentDTO(StudentDTOBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.age = builder.age;
@@ -37,7 +37,7 @@ public class StudentDTO {
     }
 
     public StudentDTO(StudentEntity entity) {
-        this.iD = entity.getID();
+        this.id = entity.getId();
         this.firstName = entity.getFirstName();
         this.lastName = entity.getLastName();
         this.age = entity.getAge();
@@ -48,7 +48,7 @@ public class StudentDTO {
 
     public static class StudentDTOBuilder {
 
-        private Long iD;
+        private Long id;
 
         private String firstName;
 
@@ -58,7 +58,7 @@ public class StudentDTO {
 
         private Long groupId;
 
-        public String groupName;
+        private String groupName;
 
         private Byte course;
 
@@ -75,8 +75,8 @@ public class StudentDTO {
             return this;
         }
 
-        public StudentDTOBuilder setID(Long iD) {
-            this.iD = iD;
+        public StudentDTOBuilder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -85,8 +85,8 @@ public class StudentDTO {
             return this;
         }
 
-        public StudentDTOBuilder setGroupID(Long groupID) {
-            this.groupId = groupID;
+        public StudentDTOBuilder setGroupId(Long groupId) {
+            this.groupId = groupId;
             return this;
         }
 
@@ -110,12 +110,12 @@ public class StudentDTO {
         }
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -177,7 +177,7 @@ public class StudentDTO {
     @Override
     public String toString() {
         return "StudentDTO{" +
-                "iD=" + iD +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
@@ -193,12 +193,12 @@ public class StudentDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentDTO that = (StudentDTO) o;
-        return Objects.equals(iD, that.iD) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(groupId, that.groupId) && Objects.equals(groupName, that.groupName) && Objects.equals(course, that.course) && Objects.equals(email, that.email);
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(groupId, that.groupId) && Objects.equals(groupName, that.groupName) && Objects.equals(course, that.course) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, firstName, lastName, age, groupId, groupName, course, email);
+        return Objects.hash(id, firstName, lastName, age, groupId, groupName, course, email);
     }
 }
 

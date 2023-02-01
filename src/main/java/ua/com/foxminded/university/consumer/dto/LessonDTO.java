@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class LessonDTO {
 
-    private Long iD;
+    private Long id;
 
 
     private String name;
@@ -16,15 +16,15 @@ public class LessonDTO {
 
     private ZonedDateTime startTime;
 
-    private Long subjectID;
+    private Long subjectId;
 
     private String subjectName;
 
-    private Long groupID;
+    private Long groupId;
 
     private String groupName;
 
-    private Long teacherID;
+    private Long teacherId;
 
     private String teacherName;
 
@@ -33,53 +33,53 @@ public class LessonDTO {
     }
 
     public LessonDTO(LessonDTOBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.name = builder.name;
         this.duration = builder.duration;
         this.startTime = builder.startTime;
-        this.subjectID = builder.subjectID;
+        this.subjectId = builder.subjectId;
         this.subjectName = builder.subjectName;
-        this.groupID = builder.groupID;
+        this.groupId = builder.groupId;
         this.groupName = builder.groupName;
-        this.teacherID = builder.teacherID;
+        this.teacherId = builder.teacherId;
         this.teacherName = builder.teacherName;
 
     }
 
     public LessonDTO(LessonEntity entity) {
-        this.iD = entity.getID();
+        this.id = entity.getId();
         this.name = entity.getName();
         this.duration = entity.getDuration();
         this.startTime = entity.getStartTime();
-        this.subjectID = entity.getSubjectID();
-        this.groupID = entity.getGroupID();
-        this.teacherID = entity.getTeacherID();
+        this.subjectId = entity.getSubjectId();
+        this.groupId = entity.getGroupId();
+        this.teacherId = entity.getTeacherId();
     }
 
     public static class LessonDTOBuilder {
 
-        private Long iD;
+        private Long id;
         private String name;
 
         private Integer duration;
 
         private ZonedDateTime startTime;
 
-        private Long subjectID;
+        private Long subjectId;
 
         public String subjectName;
 
-        private Long groupID;
+        private Long groupId;
 
         public String groupName;
 
-        private Long teacherID;
+        private Long teacherId;
 
         public String teacherName;
 
 
-        public LessonDTOBuilder setID(Long iD) {
-            this.iD = iD;
+        public LessonDTOBuilder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -98,8 +98,8 @@ public class LessonDTO {
             return this;
         }
 
-        public LessonDTOBuilder setSubjectID(Long subjectID) {
-            this.subjectID = subjectID;
+        public LessonDTOBuilder setSubjectId(Long subjectId) {
+            this.subjectId = subjectId;
             return this;
         }
 
@@ -108,8 +108,8 @@ public class LessonDTO {
             return this;
         }
 
-        public LessonDTOBuilder setGroupID(Long groupID) {
-            this.groupID = groupID;
+        public LessonDTOBuilder setGroupId(Long groupId) {
+            this.groupId = groupId;
             return this;
         }
 
@@ -118,8 +118,8 @@ public class LessonDTO {
             return this;
         }
 
-        public LessonDTOBuilder setTeacherID(Long teacherID) {
-            this.teacherID = teacherID;
+        public LessonDTOBuilder setTeacherId(Long teacherId) {
+            this.teacherId = teacherId;
             return this;
         }
 
@@ -134,12 +134,12 @@ public class LessonDTO {
 
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -166,12 +166,12 @@ public class LessonDTO {
         this.startTime = startTime;
     }
 
-    public Long getSubjectID() {
-        return subjectID;
+    public Long getSubjectId() {
+        return subjectId;
     }
 
-    public void setSubjectID(Long subjectID) {
-        this.subjectID = subjectID;
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
     }
 
     public String getSubjectName() {
@@ -182,12 +182,12 @@ public class LessonDTO {
         this.subjectName = subjectName;
     }
 
-    public Long getGroupID() {
-        return groupID;
+    public Long getGroupId() {
+        return groupId;
     }
 
-    public void setGroupID(Long groupID) {
-        this.groupID = groupID;
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
     public String getGroupName() {
@@ -198,12 +198,12 @@ public class LessonDTO {
         this.groupName = groupName;
     }
 
-    public Long getTeacherID() {
-        return teacherID;
+    public Long getTeacherId() {
+        return teacherId;
     }
 
-    public void setTeacherID(Long teacherID) {
-        this.teacherID = teacherID;
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getTeacherName() {
@@ -217,15 +217,15 @@ public class LessonDTO {
     @Override
     public String toString() {
         return "LessonDTO{" +
-                "iD=" + iD +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", duration=" + duration +
                 ", startTime=" + startTime +
-                ", subjectID=" + subjectID +
+                ", subjectId=" + subjectId +
                 ", subjectName='" + subjectName + '\'' +
-                ", groupID=" + groupID +
+                ", groupId=" + groupId +
                 ", groupName='" + groupName + '\'' +
-                ", teacherID=" + teacherID +
+                ", teacherId=" + teacherId +
                 ", teacherName='" + teacherName + '\'' +
                 '}';
     }
@@ -235,11 +235,11 @@ public class LessonDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LessonDTO lessonDTO = (LessonDTO) o;
-        return Objects.equals(iD, lessonDTO.iD) && Objects.equals(name, lessonDTO.name) && Objects.equals(duration, lessonDTO.duration) && Objects.equals(startTime, lessonDTO.startTime) && Objects.equals(subjectID, lessonDTO.subjectID) && Objects.equals(subjectName, lessonDTO.subjectName) && Objects.equals(groupID, lessonDTO.groupID) && Objects.equals(groupName, lessonDTO.groupName) && Objects.equals(teacherID, lessonDTO.teacherID) && Objects.equals(teacherName, lessonDTO.teacherName);
+        return Objects.equals(id, lessonDTO.id) && Objects.equals(name, lessonDTO.name) && Objects.equals(duration, lessonDTO.duration) && Objects.equals(startTime, lessonDTO.startTime) && Objects.equals(subjectId, lessonDTO.subjectId) && Objects.equals(subjectName, lessonDTO.subjectName) && Objects.equals(groupId, lessonDTO.groupId) && Objects.equals(groupName, lessonDTO.groupName) && Objects.equals(teacherId, lessonDTO.teacherId) && Objects.equals(teacherName, lessonDTO.teacherName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, name, duration, startTime, subjectID, subjectName, groupID, groupName, teacherID, teacherName);
+        return Objects.hash(id, name, duration, startTime, subjectId, subjectName, groupId, groupName, teacherId, teacherName);
     }
 }

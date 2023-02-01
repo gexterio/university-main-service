@@ -15,7 +15,7 @@ public class FacultyEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long iD;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "duration")
@@ -26,13 +26,13 @@ public class FacultyEntity {
     }
 
     public FacultyEntity(FacultyEntityBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.name = builder.name;
         this.duration = builder.duration;
     }
 
     public static class FacultyEntityBuilder {
-        private Long iD;
+        private Long id;
 
         private final String name;
 
@@ -42,8 +42,8 @@ public class FacultyEntity {
             this.name = name;
         }
 
-        public FacultyEntityBuilder setID(Long iD) {
-            this.iD = iD;
+        public FacultyEntityBuilder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -57,12 +57,12 @@ public class FacultyEntity {
         }
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -84,7 +84,7 @@ public class FacultyEntity {
     @Override
     public String toString() {
         return "FacultyEntity{" +
-                "iD=" + iD +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", duration=" + duration +
                 '}';
@@ -95,11 +95,11 @@ public class FacultyEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FacultyEntity that = (FacultyEntity) o;
-        return duration == that.duration && Objects.equals(iD, that.iD) && name.equals(that.name);
+        return duration == that.duration && Objects.equals(id, that.id) && name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, name, duration);
+        return Objects.hash(id, name, duration);
     }
 }

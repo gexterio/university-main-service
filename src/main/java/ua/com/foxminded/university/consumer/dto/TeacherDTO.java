@@ -7,14 +7,14 @@ import java.util.Objects;
 
 public class TeacherDTO {
 
-    private Long iD;
+    private Long id;
     private String firstName;
     private String lastName;
     private Byte age;
     private String grade;
     private Integer experience;
     private String email;
-    private Long facultyID;
+    private Long facultyId;
     private String facultyName;
 
 
@@ -22,43 +22,43 @@ public class TeacherDTO {
     }
 
     public TeacherDTO(TeacherDTOBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.age = builder.age;
         this.grade = builder.grade;
         this.experience = builder.experience;
         this.email = builder.email;
-        this.facultyID = builder.facultyID;
+        this.facultyId = builder.facultyId;
         this.facultyName = builder.facultyName;
     }
 
     public TeacherDTO(TeacherEntity entity) {
-        this.iD = entity.getID();
+        this.id = entity.getID();
         this.firstName = entity.getFirstName();
         this.lastName = entity.getLastName();
         this.age = entity.getAge();
         this.grade = entity.getGrade();
         this.experience = entity.getExperience();
         this.email = entity.getEmail();
-        this.facultyID = entity.getFacultyID();
+        this.facultyId = entity.getFacultyID();
     }
 
     public static class TeacherDTOBuilder {
-        private Long iD;
+        private Long id;
         private String firstName;
         private String lastName;
         private Byte age;
         private String grade;
         private Integer experience;
         private String email;
-        private Long facultyID;
+        private Long facultyId;
 
         private String facultyName;
 
 
-        public TeacherDTOBuilder setID(Long iD) {
-            this.iD = iD;
+        public TeacherDTOBuilder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -93,7 +93,7 @@ public class TeacherDTO {
         }
 
         public TeacherDTOBuilder setFacultyId(Long facultyID) {
-            this.facultyID = facultyID;
+            this.facultyId = facultyID;
             return this;
         }
 
@@ -107,12 +107,12 @@ public class TeacherDTO {
         }
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -163,12 +163,12 @@ public class TeacherDTO {
         this.email = email;
     }
 
-    public Long getFacultyID() {
-        return facultyID;
+    public Long getFacultyId() {
+        return facultyId;
     }
 
-    public void setFacultyID(Long facultyID) {
-        this.facultyID = facultyID;
+    public void setFacultyId(Long facultyId) {
+        this.facultyId = facultyId;
     }
 
     public String getFacultyName() {
@@ -182,14 +182,14 @@ public class TeacherDTO {
     @Override
     public String toString() {
         return "TeacherDTO{" +
-                "iD=" + iD +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", grade='" + grade + '\'' +
                 ", experience=" + experience +
                 ", email='" + email + '\'' +
-                ", facultyID=" + facultyID +
+                ", facultyId=" + facultyId +
                 ", facultyName='" + facultyName + '\'' +
                 '}';
     }
@@ -199,11 +199,11 @@ public class TeacherDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TeacherDTO that = (TeacherDTO) o;
-        return Objects.equals(iD, that.iD) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(grade, that.grade) && Objects.equals(experience, that.experience) && Objects.equals(email, that.email) && Objects.equals(facultyID, that.facultyID) && Objects.equals(facultyName, that.facultyName);
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(grade, that.grade) && Objects.equals(experience, that.experience) && Objects.equals(email, that.email) && Objects.equals(facultyId, that.facultyId) && Objects.equals(facultyName, that.facultyName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, firstName, lastName, age, grade, experience, email, facultyID, facultyName);
+        return Objects.hash(id, firstName, lastName, age, grade, experience, email, facultyId, facultyName);
     }
 }

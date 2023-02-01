@@ -14,39 +14,39 @@ public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long iD;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "faculty_id")
-    private Long facultyID;
+    private Long facultyId;
 
     public GroupEntity() {
     }
 
     public GroupEntity(GroupEntityBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.name = builder.name;
-        this.facultyID = builder.facultyID;
+        this.facultyId = builder.facultyId;
     }
 
     public static class GroupEntityBuilder {
 
-        private Long iD;
+        private Long id;
         private final String name;
 
-        private Long facultyID;
+        private Long facultyId;
 
         public GroupEntityBuilder(String name) {
             this.name = name;
         }
 
-        public GroupEntityBuilder setFacultyID(Long iD) {
-            this.facultyID = iD;
+        public GroupEntityBuilder setFacultyId(Long id) {
+            this.facultyId = id;
             return this;
         }
 
-        public GroupEntityBuilder setID(Long iD) {
-            this.iD = iD;
+        public GroupEntityBuilder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -55,12 +55,12 @@ public class GroupEntity {
         }
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -71,19 +71,19 @@ public class GroupEntity {
         this.name = name;
     }
 
-    public Long getFacultyID() {
-        return facultyID;
+    public Long getFacultyId() {
+        return facultyId;
     }
 
-    public void setFacultyID(Long facultyID) {
-        this.facultyID = facultyID;
+    public void setFacultyId(Long facultyId) {
+        this.facultyId = facultyId;
     }
 
     @Override
     public String toString() {
         return "GroupEntity{" +
                 "name='" + name + '\'' +
-                ", facultyID=" + facultyID +
+                ", facultyId=" + facultyId +
                 '}';
     }
 
@@ -92,11 +92,11 @@ public class GroupEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupEntity that = (GroupEntity) o;
-        return Objects.equals(iD, that.iD) && Objects.equals(name, that.name) && Objects.equals(facultyID, that.facultyID);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(facultyId, that.facultyId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, name, facultyID);
+        return Objects.hash(id, name, facultyId);
     }
 }

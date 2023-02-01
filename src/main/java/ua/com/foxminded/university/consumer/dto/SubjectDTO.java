@@ -8,7 +8,7 @@ import java.util.Objects;
 public class SubjectDTO {
 
 
-    private Long iD;
+    private Long id;
 
     private String name;
 
@@ -18,20 +18,20 @@ public class SubjectDTO {
     }
 
     public SubjectDTO(SubjectDTOBuilder builder) {
-        this.iD = builder.iD;
+        this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
     }
 
     public SubjectDTO(SubjectEntity entity) {
-        this.iD = entity.getID();
+        this.id = entity.getId();
         this.name = entity.getName();
         this.description = entity.getDescription();
     }
 
     public static class SubjectDTOBuilder {
 
-        private Long iD;
+        private Long id;
 
         private String name;
 
@@ -43,8 +43,8 @@ public class SubjectDTO {
             return this;
         }
 
-        public SubjectDTOBuilder setID(Long iD) {
-            this.iD = iD;
+        public SubjectDTOBuilder setId(Long id) {
+            this.id = id;
             return this;
         }
 
@@ -58,12 +58,12 @@ public class SubjectDTO {
         }
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -85,7 +85,7 @@ public class SubjectDTO {
     @Override
     public String toString() {
         return "SubjectDTO{" +
-                "iD=" + iD +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
@@ -96,11 +96,11 @@ public class SubjectDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubjectDTO that = (SubjectDTO) o;
-        return Objects.equals(iD, that.iD) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, name, description);
+        return Objects.hash(id, name, description);
     }
 }
