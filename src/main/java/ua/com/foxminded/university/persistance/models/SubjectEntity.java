@@ -1,22 +1,33 @@
 package ua.com.foxminded.university.persistance.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "subjects")
 public class SubjectEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long iD;
-
+    @Column(name = "name")
     private String name;
-
+    @Column(name = "description")
     private String description;
 
     public SubjectEntity() {
     }
 
-    public SubjectEntity (SubjectEntityBuilder builder) {
-        this.iD= builder.iD;
-        this.name= builder.name;
-        this.description= builder.description;
+    public SubjectEntity(SubjectEntityBuilder builder) {
+        this.iD = builder.iD;
+        this.name = builder.name;
+        this.description = builder.description;
     }
 
     public static class SubjectEntityBuilder {
@@ -32,16 +43,16 @@ public class SubjectEntity {
         }
 
         public SubjectEntityBuilder setDescription(String description) {
-            this.description=description;
+            this.description = description;
             return this;
         }
 
-        public SubjectEntityBuilder setID (Long iD) {
+        public SubjectEntityBuilder setID(Long iD) {
             this.iD = iD;
             return this;
         }
 
-        public SubjectEntity build () {
+        public SubjectEntity build() {
             return new SubjectEntity(this);
         }
     }

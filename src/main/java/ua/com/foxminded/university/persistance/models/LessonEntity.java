@@ -1,23 +1,33 @@
 package ua.com.foxminded.university.persistance.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "lessons")
 public class LessonEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long iD;
-
-
+    @Column(name = "name")
     private String name;
-
+    @Column(name = "duration")
     private Integer duration;
-
+    @Column(name = "start_time")
     private ZonedDateTime startTime;
-
+    @Column(name = "subject_id")
     private Long subjectID;
-
+    @Column(name = "group_id")
     private Long groupID;
-
+    @Column(name = "teacher_id")
     private Long teacherID;
 
     public LessonEntity() {

@@ -1,15 +1,33 @@
 package ua.com.foxminded.university.persistance.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "teachers")
 public class TeacherEntity {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long iD;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "age")
     private Byte age;
+    @Column(name = "grade")
     private String grade;
+    @Column(name = "experience")
     private Integer experience;
+    @Column(name = "email")
     private String email;
+    @Column(name = "faculty_id")
     private Long facultyID;
 
     public TeacherEntity() {

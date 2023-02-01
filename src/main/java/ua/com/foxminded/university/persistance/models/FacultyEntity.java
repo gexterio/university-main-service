@@ -1,11 +1,24 @@
 package ua.com.foxminded.university.persistance.models;
 
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "faculties")
 public class FacultyEntity {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long iD;
+    @Column(name = "name")
     private String name;
+    @Column(name = "duration")
     private Integer duration;
 
     public FacultyEntity() {
@@ -14,7 +27,7 @@ public class FacultyEntity {
 
     public FacultyEntity(FacultyEntityBuilder builder) {
         this.iD = builder.iD;
-        this.name=builder.name;
+        this.name = builder.name;
         this.duration = builder.duration;
     }
 
