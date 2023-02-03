@@ -21,6 +21,8 @@ public class FacultyEntity {
     @Column(name = "duration")
     private Integer duration;
 
+    
+
     public FacultyEntity() {
 
     }

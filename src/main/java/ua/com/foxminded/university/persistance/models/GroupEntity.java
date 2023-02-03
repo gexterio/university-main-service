@@ -1,11 +1,16 @@
 package ua.com.foxminded.university.persistance.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,6 +24,10 @@ public class GroupEntity {
     private String name;
     @Column(name = "faculty_id")
     private Long facultyId;
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<StudentEntity> students = new ArrayList<>();
 
     public GroupEntity() {
     }
@@ -27,6 +36,7 @@ public class GroupEntity {
         this.id = builder.id;
         this.name = builder.name;
         this.facultyId = builder.facultyId;
+        this.students = builder.students;
     }
 
     public static class GroupEntityBuilder {
@@ -35,6 +45,9 @@ public class GroupEntity {
         private final String name;
 
         private Long facultyId;
+
+        private List<StudentEntity> students = new ArrayList<>();
+
 
         public GroupEntityBuilder(String name) {
             this.name = name;
@@ -47,6 +60,11 @@ public class GroupEntity {
 
         public GroupEntityBuilder setId(Long id) {
             this.id = id;
+            return this;
+        }
+
+        public GroupEntityBuilder addStudent(StudentEntity student) {
+            students.add(student);
             return this;
         }
 
@@ -79,11 +97,25 @@ public class GroupEntity {
         this.facultyId = facultyId;
     }
 
+    public List<StudentEntity> getStudents() {
+        return students;
+    }
+
+    public void addStudent(StudentEntity student) {
+        students.add(student);
+    }
+
+    public void removeStudent(StudentEntity student) {
+        students.remove(student);
+    }
+
     @Override
     public String toString() {
         return "GroupEntity{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", facultyId=" + facultyId +
+                ", students=" + students +
                 '}';
     }
 

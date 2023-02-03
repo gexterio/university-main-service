@@ -1,11 +1,16 @@
 package ua.com.foxminded.university.persistance.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -30,6 +35,11 @@ public class TeacherEntity {
     @Column(name = "faculty_id")
     private Long facultyID;
 
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<LessonEntity> lessons = new ArrayList<>();
+
     public TeacherEntity() {
     }
 
@@ -42,6 +52,7 @@ public class TeacherEntity {
         this.experience = builder.experience;
         this.email = builder.email;
         this.facultyID = builder.facultyID;
+        this.lessons=builder.lessons;
     }
 
     public static class TeacherEntityBuilder {
@@ -53,6 +64,8 @@ public class TeacherEntity {
         private Integer experience;
         private String email;
         private Long facultyID;
+        private List<LessonEntity> lessons = new ArrayList<>();
+
 
         public TeacherEntityBuilder(String firstName, String lastName) {
             this.firstName = firstName;
@@ -86,6 +99,11 @@ public class TeacherEntity {
 
         public TeacherEntityBuilder setFacultyId(Long facultyID) {
             this.facultyID = facultyID;
+            return this;
+        }
+
+        public TeacherEntityBuilder addLesson(LessonEntity lesson) {
+            lessons.add(lesson);
             return this;
         }
 
@@ -158,6 +176,18 @@ public class TeacherEntity {
         this.facultyID = facultyID;
     }
 
+    public List<LessonEntity> getLessons() {
+        return lessons;
+    }
+
+    public void addLesson(LessonEntity lesson) {
+        lessons.add(lesson);
+    }
+
+    public void removeLesson(LessonEntity lesson) {
+        lessons.remove(lesson);
+    }
+
     @Override
     public String toString() {
         return "TeacherEntity{" +
@@ -169,6 +199,7 @@ public class TeacherEntity {
                 ", experience=" + experience +
                 ", email='" + email + '\'' +
                 ", facultyID=" + facultyID +
+                ", lessons=" + lessons +
                 '}';
     }
 
