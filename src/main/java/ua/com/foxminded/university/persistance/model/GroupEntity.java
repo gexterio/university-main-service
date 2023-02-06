@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.persistance.models;
+package ua.com.foxminded.university.persistance.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

@@ -1,6 +1,6 @@
 package ua.com.foxminded.university.consumer.dto;
 
-import ua.com.foxminded.university.persistance.models.GroupEntity;
+import ua.com.foxminded.university.persistance.model.GroupEntity;
 
 import java.util.Objects;
 

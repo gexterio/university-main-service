@@ -1,7 +1,7 @@
 package ua.com.foxminded.university.consumer.dto;
 
 
-import ua.com.foxminded.university.persistance.models.TeacherEntity;
+import ua.com.foxminded.university.persistance.model.TeacherEntity;
 
 import java.util.Objects;
 

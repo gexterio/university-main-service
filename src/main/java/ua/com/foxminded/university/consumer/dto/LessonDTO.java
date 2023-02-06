@@ -1,6 +1,6 @@
 package ua.com.foxminded.university.consumer.dto;
 
-import ua.com.foxminded.university.persistance.models.LessonEntity;
+import ua.com.foxminded.university.persistance.model.LessonEntity;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -67,15 +67,15 @@ public class LessonDTO {
 
         private Long subjectId;
 
-        public String subjectName;
+        private String subjectName;
 
         private Long groupId;
 
-        public String groupName;
+        private String groupName;
 
         private Long teacherId;
 
-        public String teacherName;
+        private String teacherName;
 
 
         public LessonDTOBuilder setId(Long id) {
