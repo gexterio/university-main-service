@@ -1,4 +1,3 @@
-
 create table if not exists faculties
 (
     id       serial primary key not null unique,
