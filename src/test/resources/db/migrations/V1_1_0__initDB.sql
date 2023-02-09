@@ -47,7 +47,7 @@ create table if not exists lessons
     id serial primary key not null unique,
     name varchar(32) not null unique,
     duration int,
-    start_time timetz,
+    start_time timestamptz,
     subject_id int references subjects not null,
     group_id int references groups,
     teacher_id int references teachers
