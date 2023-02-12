@@ -34,14 +34,12 @@ public class TeacherDTO {
     }
 
     public TeacherDTO(TeacherEntity entity) {
-        this.id = entity.getID();
         this.firstName = entity.getFirstName();
         this.lastName = entity.getLastName();
         this.age = entity.getAge();
         this.grade = entity.getGrade();
         this.experience = entity.getExperience();
         this.email = entity.getEmail();
-        this.facultyId = entity.getFacultyID();
     }
 
     public static class TeacherDTOBuilder {

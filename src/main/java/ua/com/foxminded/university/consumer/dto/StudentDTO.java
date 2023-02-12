@@ -13,9 +13,7 @@ public class StudentDTO {
 
     private Byte age;
 
-    private Long groupId;
-
-    private String groupName;
+    private GroupDTO group;
 
     private Byte course;
 
@@ -30,8 +28,7 @@ public class StudentDTO {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.age = builder.age;
-        this.groupId = builder.groupId;
-        this.groupName = builder.groupName;
+        this.group = builder.group;
         this.course = builder.course;
         this.email = builder.email;
     }
@@ -41,7 +38,6 @@ public class StudentDTO {
         this.firstName = entity.getFirstName();
         this.lastName = entity.getLastName();
         this.age = entity.getAge();
-        this.groupId = entity.getGroupId();
         this.course = entity.getCourse();
         this.email = entity.getEmail();
     }
@@ -56,9 +52,7 @@ public class StudentDTO {
 
         private Byte age;
 
-        private Long groupId;
-
-        private String groupName;
+        private GroupDTO group;
 
         private Byte course;
 
@@ -85,13 +79,8 @@ public class StudentDTO {
             return this;
         }
 
-        public StudentDTOBuilder setGroupId(Long groupId) {
-            this.groupId = groupId;
-            return this;
-        }
-
-        public StudentDTOBuilder setGroupName(String groupName) {
-            this.groupName = groupName;
+        public StudentDTOBuilder setGroup(GroupDTO group) {
+            this.group = group;
             return this;
         }
 
@@ -142,20 +131,13 @@ public class StudentDTO {
         this.age = age;
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public GroupDTO getGroup() {
+        return group;
     }
 
-    public String getGroupName() {
-        return groupName;
-    }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public void setGroup(GroupDTO group) {
+        this.group = group;
     }
 
     public Byte getCourse() {
@@ -181,8 +163,7 @@ public class StudentDTO {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", groupId=" + groupId +
-                ", groupName='" + groupName + '\'' +
+                ", group=" + group.getName() +
                 ", course=" + course +
                 ", email='" + email + '\'' +
                 '}';
@@ -193,12 +174,12 @@ public class StudentDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentDTO that = (StudentDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(groupId, that.groupId) && Objects.equals(groupName, that.groupName) && Objects.equals(course, that.course) && Objects.equals(email, that.email);
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(group, that.group) && Objects.equals(course, that.course) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age, groupId, groupName, course, email);
+        return Objects.hash(id, firstName, lastName, age, group, course, email);
     }
 }
 

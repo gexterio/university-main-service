@@ -14,6 +14,8 @@ public class GroupDTO {
 
     private String facultyName;
 
+
+
     public GroupDTO() {
     }
 
@@ -27,7 +29,6 @@ public class GroupDTO {
     public GroupDTO(GroupEntity entity) {
         this.id = entity.getId();
         this.name = entity.getName();
-        this.facultyId = entity.getFacultyId();
     }
 
     public static class GroupDTOBuilder {

@@ -51,9 +51,6 @@ public class LessonDTO {
         this.name = entity.getName();
         this.duration = entity.getDuration();
         this.startTime = entity.getStartTime();
-        this.subjectId = entity.getSubjectId();
-        this.groupId = entity.getGroupId();
-        this.teacherId = entity.getTeacherId();
     }
 
     public static class LessonDTOBuilder {
