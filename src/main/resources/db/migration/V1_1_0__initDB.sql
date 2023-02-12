@@ -9,7 +9,7 @@ create table if not exists groups
 (
     id serial primary key not null unique,
     name varchar(32) not null unique,
-    faculty_id int references faculties
+    faculty_id int references faculties(id)
     );
 
 create table if not exists students
@@ -18,7 +18,7 @@ create table if not exists students
     first_name varchar(32) not null,
     last_name varchar(32) not null,
     age smallint,
-    group_id int references groups,
+    group_id int references groups(id),
     course smallint,
     email varchar(64) unique
     );
@@ -39,7 +39,7 @@ create table if not exists teachers
     grade varchar(32),
     experience int,
     email varchar(64) unique,
-    faculty_id int references faculties
+    faculty_id int references faculties(id)
     );
 
 create table if not exists lessons
@@ -48,7 +48,7 @@ create table if not exists lessons
     name varchar(64) not null,
     duration int,
     start_time timestamptz,
-    subject_id int references subjects not null,
-    group_id int references groups,
-    teacher_id int references teachers
+    subject_id int references subjects(id),
+    group_id int references groups(id),
+    teacher_id int references teachers(id)
     );
