@@ -21,35 +21,34 @@ public class FacultyEntity {
     @Column(name = "duration")
     private Integer duration;
 
-    
 
     public FacultyEntity() {
 
     }
 
-    public FacultyEntity(FacultyEntityBuilder builder) {
+    public FacultyEntity(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.duration = builder.duration;
     }
 
-    public static class FacultyEntityBuilder {
+    public static class Builder {
         private Long id;
 
         private final String name;
 
         private Integer duration;
 
-        public FacultyEntityBuilder(String name) {
+        public Builder(String name) {
             this.name = name;
         }
 
-        public FacultyEntityBuilder setId(Long id) {
+        public Builder setId(Long id) {
             this.id = id;
             return this;
         }
 
-        public FacultyEntityBuilder setDuration(Integer duration) {
+        public Builder setDuration(Integer duration) {
             this.duration = duration;
             return this;
         }
@@ -97,7 +96,7 @@ public class FacultyEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FacultyEntity that = (FacultyEntity) o;
-        return duration == that.duration && Objects.equals(id, that.id) && name.equals(that.name);
+        return Objects.equals(id, that.id) && name.equals(that.name) && Objects.equals(duration, that.duration);
     }
 
     @Override

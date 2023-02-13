@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -20,51 +22,60 @@ public class GroupEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "name")
     private String name;
-    @Column(name = "faculty_id")
-    private Long facultyId;
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+
+    @ManyToOne()
+    @JoinColumn(name = "faculty_id")
+    private FacultyEntity faculty;
+
+    @OneToMany(mappedBy = "group",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private List<StudentEntity> students = new ArrayList<>();
+
+    @OneToMany(mappedBy = "group",
+    fetch = FetchType.LAZY,
+    cascade = CascadeType.ALL)
+    private List<LessonEntity> lessons = new ArrayList<>();
 
     public GroupEntity() {
     }
 
-    public GroupEntity(GroupEntityBuilder builder) {
+    public GroupEntity(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
-        this.facultyId = builder.facultyId;
+        this.faculty = builder.faculty;
         this.students = builder.students;
     }
 
-    public static class GroupEntityBuilder {
+    public static class Builder {
 
         private Long id;
         private final String name;
 
-        private Long facultyId;
+        private FacultyEntity faculty;
 
         private List<StudentEntity> students = new ArrayList<>();
 
 
-        public GroupEntityBuilder(String name) {
+        public Builder(String name) {
             this.name = name;
         }
 
-        public GroupEntityBuilder setFacultyId(Long id) {
-            this.facultyId = id;
+        public Builder setFaculty(FacultyEntity faculty) {
+            this.faculty = faculty;
             return this;
         }
 
-        public GroupEntityBuilder setId(Long id) {
+        public Builder setId(Long id) {
             this.id = id;
             return this;
         }
 
-        public GroupEntityBuilder addStudent(StudentEntity student) {
-            students.add(student);
+        public Builder setStudents(List<StudentEntity> students) {
+            this.students = students;
             return this;
         }
 
@@ -89,34 +100,28 @@ public class GroupEntity {
         this.name = name;
     }
 
-    public Long getFacultyId() {
-        return facultyId;
+    public FacultyEntity getFaculty() {
+        return faculty;
     }
 
-    public void setFacultyId(Long facultyId) {
-        this.facultyId = facultyId;
+    public void setFaculty(FacultyEntity faculty) {
+        this.faculty = faculty;
     }
 
     public List<StudentEntity> getStudents() {
         return students;
     }
 
-    public void addStudent(StudentEntity student) {
-        students.add(student);
+    public void setStudents(List<StudentEntity> students) {
+        this.students = students;
     }
 
-    public void removeStudent(StudentEntity student) {
-        students.remove(student);
+    public List<LessonEntity> getLessons() {
+        return lessons;
     }
 
-    @Override
-    public String toString() {
-        return "GroupEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", facultyId=" + facultyId +
-                ", students=" + students +
-                '}';
+    public void setLessons(List<LessonEntity> lessons) {
+        this.lessons = lessons;
     }
 
     @Override
@@ -124,11 +129,21 @@ public class GroupEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupEntity that = (GroupEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(facultyId, that.facultyId);
+        return Objects.equals(id, that.id) && name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, facultyId);
+        return Objects.hash(id, name);
+    }
+
+    @Override
+    public String
+    toString() {
+        return "GroupEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
+
