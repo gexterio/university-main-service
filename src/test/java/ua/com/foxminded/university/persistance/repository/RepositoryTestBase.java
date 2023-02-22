@@ -1,14 +1,14 @@
-package ua.com.foxminded.university.integration.persistance.repository;
+package ua.com.foxminded.university.persistance.repository;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
-import ua.com.foxminded.university.integration.persistance.annotation.IT;
+import ua.com.foxminded.university.persistance.annotation.IT;
 
 
 @IT
-public abstract class RepositoryIntegrationTestBase {
+public abstract class RepositoryTestBase {
 
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:15.1");
 
