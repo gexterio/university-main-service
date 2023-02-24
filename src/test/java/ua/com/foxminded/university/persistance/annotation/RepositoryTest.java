@@ -16,5 +16,5 @@ import java.lang.annotation.Target;
 @Testcontainers
 @Transactional
 @SpringBootTest
-public @interface IT {
+public @interface RepositoryTest {
 }
