@@ -3,11 +3,13 @@ package ua.com.foxminded.university.persistance.repository;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
-import ua.com.foxminded.university.persistance.annotation.IT;
+import ua.com.foxminded.university.persistance.annotation.RepositoryTest;
 
 
-@IT
+@RepositoryTest
+@Sql("classpath:data/initTestDataScript.sql")
 public abstract class RepositoryTestBase {
 
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:15.1");
