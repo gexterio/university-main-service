@@ -75,7 +75,7 @@ public class StudentEntity {
             this.lastName = lastName;
         }
 
-        public Builder setID(Long id) {
+        public Builder setId(Long id) {
             this.id = id;
             return this;
         }
