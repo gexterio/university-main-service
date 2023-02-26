@@ -14,7 +14,7 @@ public class FacultyDTO {
 
     }
 
-    public FacultyDTO(FacultyDTOBuilder builder) {
+    public FacultyDTO(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.duration = builder.duration;
@@ -26,7 +26,7 @@ public class FacultyDTO {
         this.duration = entity.getDuration();
     }
 
-    public static class FacultyDTOBuilder {
+    public static class Builder {
         private Long id;
 
         private String name;
@@ -34,17 +34,17 @@ public class FacultyDTO {
         private Integer duration;
 
 
-        public FacultyDTOBuilder setId(Long id) {
+        public Builder setId(Long id) {
             this.id = id;
             return this;
         }
 
-        public FacultyDTOBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public FacultyDTOBuilder setDuration(Integer duration) {
+        public Builder setDuration(Integer duration) {
             this.duration = duration;
             return this;
         }

@@ -1,8 +1,6 @@
 package ua.com.foxminded.university.consumer.dto;
 
 
-import ua.com.foxminded.university.persistance.model.TeacherEntity;
-
 import java.util.Objects;
 
 public class TeacherDTO {
@@ -14,14 +12,13 @@ public class TeacherDTO {
     private String grade;
     private Integer experience;
     private String email;
-    private Long facultyId;
-    private String facultyName;
+    private FacultyDTO faculty;
 
 
     public TeacherDTO() {
     }
 
-    public TeacherDTO(TeacherDTOBuilder builder) {
+    public TeacherDTO(Builder builder) {
         this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
@@ -29,20 +26,10 @@ public class TeacherDTO {
         this.grade = builder.grade;
         this.experience = builder.experience;
         this.email = builder.email;
-        this.facultyId = builder.facultyId;
-        this.facultyName = builder.facultyName;
+        this.faculty = builder.faculty;
     }
 
-    public TeacherDTO(TeacherEntity entity) {
-        this.firstName = entity.getFirstName();
-        this.lastName = entity.getLastName();
-        this.age = entity.getAge();
-        this.grade = entity.getGrade();
-        this.experience = entity.getExperience();
-        this.email = entity.getEmail();
-    }
-
-    public static class TeacherDTOBuilder {
+    public static class Builder {
         private Long id;
         private String firstName;
         private String lastName;
@@ -50,55 +37,49 @@ public class TeacherDTO {
         private String grade;
         private Integer experience;
         private String email;
-        private Long facultyId;
-
-        private String facultyName;
+        private FacultyDTO faculty;
 
 
-        public TeacherDTOBuilder setId(Long id) {
+        public Builder setId(Long id) {
             this.id = id;
             return this;
         }
 
-        public TeacherDTOBuilder setFirstName(String firstName) {
+        public Builder setFirstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public TeacherDTOBuilder setLastName(String lastName) {
+        public Builder setFaculty(FacultyDTO faculty) {
+            this.faculty = faculty;
+            return this;
+        }
+
+        public Builder setLastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        public TeacherDTOBuilder setAge(Byte age) {
+        public Builder setAge(Byte age) {
             this.age = age;
             return this;
         }
 
-        public TeacherDTOBuilder setExperience(Integer experience) {
+        public Builder setExperience(Integer experience) {
             this.experience = experience;
             return this;
         }
 
-        public TeacherDTOBuilder setGrade(String grade) {
+        public Builder setGrade(String grade) {
             this.grade = grade;
             return this;
         }
 
-        public TeacherDTOBuilder setEmail(String email) {
+        public Builder setEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public TeacherDTOBuilder setFacultyId(Long facultyID) {
-            this.facultyId = facultyID;
-            return this;
-        }
-
-        public TeacherDTOBuilder setFacultyName(String facultyName) {
-            this.facultyName = facultyName;
-            return this;
-        }
 
         public TeacherDTO build() {
             return new TeacherDTO(this);
@@ -161,20 +142,25 @@ public class TeacherDTO {
         this.email = email;
     }
 
-    public Long getFacultyId() {
-        return facultyId;
+    public FacultyDTO getFaculty() {
+        return faculty;
     }
 
-    public void setFacultyId(Long facultyId) {
-        this.facultyId = facultyId;
+    public void setFaculty(FacultyDTO faculty) {
+        this.faculty = faculty;
     }
 
-    public String getFacultyName() {
-        return facultyName;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TeacherDTO that = (TeacherDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(grade, that.grade) && Objects.equals(experience, that.experience) && Objects.equals(email, that.email) && Objects.equals(faculty, that.faculty);
     }
 
-    public void setFacultyName(String facultyName) {
-        this.facultyName = facultyName;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, age, grade, experience, email, faculty);
     }
 
     @Override
@@ -187,21 +173,7 @@ public class TeacherDTO {
                 ", grade='" + grade + '\'' +
                 ", experience=" + experience +
                 ", email='" + email + '\'' +
-                ", facultyId=" + facultyId +
-                ", facultyName='" + facultyName + '\'' +
+                ", faculty=" + faculty +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TeacherDTO that = (TeacherDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(grade, that.grade) && Objects.equals(experience, that.experience) && Objects.equals(email, that.email) && Objects.equals(facultyId, that.facultyId) && Objects.equals(facultyName, that.facultyName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age, grade, experience, email, facultyId, facultyName);
     }
 }
