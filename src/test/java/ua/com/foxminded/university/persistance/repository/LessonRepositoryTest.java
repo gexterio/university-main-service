@@ -10,16 +10,19 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 class LessonRepositoryTest extends RepositoryTestBase {
 
     @Autowired
     private LessonRepository repository;
 
-
     private final Long student_id = 1L;
 
     private final Long teacher_id = 1L;
+
+    private final Long lesson_id = 11L;
 
     public static final ZoneId ZONE = ZoneId.of("Asia/Tbilisi");
 
@@ -76,4 +79,35 @@ class LessonRepositoryTest extends RepositoryTestBase {
         Assertions.assertEquals(expectedSize, actualLessons.size());
         Assertions.assertEquals(expectedLessons, actualLessons);
     }
+
+    @Test
+    void save_returnSavedLesson_ifPersist() {
+        LessonEntity expectedLesson = new LessonEntity.Builder("testLesson").build();
+        LessonEntity actualLesson = repository.save(expectedLesson);
+        Assertions.assertEquals(expectedLesson, actualLesson);
+    }
+
+    @Test
+    void findById_returnLesson_ifExists() {
+        LessonEntity inputLesson = new LessonEntity.Builder("testLesson").build();
+        LessonEntity expectedLesson = repository.save(inputLesson);
+        LessonEntity actualLesson = repository.findById(lesson_id).get();
+        Assertions.assertEquals(expectedLesson, actualLesson);
+    }
+
+    @Test
+    void update_updated() {
+        LessonEntity expectedLesson = repository.findById(1L).get();
+        expectedLesson.setName("newName");
+        LessonEntity actualLesson = repository.saveAndFlush(expectedLesson);
+        Assertions.assertEquals(expectedLesson, actualLesson);
+    }
+
+    @Test
+    void delete_deleted_ifExists() {
+        repository.deleteById(1L);
+        Optional<LessonEntity> actual = repository.findById(1L);
+        Assertions.assertTrue(actual.isEmpty());
+    }
+
 }
