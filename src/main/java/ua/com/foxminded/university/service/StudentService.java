@@ -1,66 +1,62 @@
 package ua.com.foxminded.university.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ua.com.foxminded.university.consumer.dto.LessonDTO;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
-import ua.com.foxminded.university.persistance.model.LessonEntity;
-import ua.com.foxminded.university.persistance.model.StudentEntity;
-import ua.com.foxminded.university.persistance.repository.LessonRepository;
 import ua.com.foxminded.university.persistance.repository.StudentRepository;
-import ua.com.foxminded.university.util.modelmapper.LessonMapper;
 import ua.com.foxminded.university.util.modelmapper.StudentMapper;
 
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
 
-    private final LessonRepository lessonRepository;
-    private final StudentRepository studentRepository;
-    private final StudentMapper studentMapper;
-    private final LessonMapper lessonMapper;
+    private final StudentRepository repository;
+    private final StudentMapper mapper;
 
     @Autowired
-    public StudentService(LessonRepository lessonRepository, StudentRepository studentRepository, StudentMapper studentMapper, LessonMapper lessonMapper) {
-        this.lessonRepository = lessonRepository;
-        this.studentRepository = studentRepository;
-        this.studentMapper = studentMapper;
-        this.lessonMapper = lessonMapper;
+    public StudentService(StudentRepository repository, StudentMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public void createStudent(StudentDTO dto) {
-        StudentEntity entity = studentMapper.toEntity(dto);
-        studentRepository.save(entity);
+    public Page<StudentDTO> findAll(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(mapper::toDto);
     }
 
-    public StudentDTO readStudentById(Long id) {
-        Optional<StudentEntity> optionalStudent = studentRepository.findById(id);
-        if (optionalStudent.isEmpty()) {
-            throw new IllegalArgumentException("student with id = " + id + " not found");
-        }
-        return studentMapper.toDto(optionalStudent.get());
+    public Optional<StudentDTO> findById(Long id) {
+        return repository.findById(id)
+                .map(mapper::toDto);
     }
 
-    public void deleteStudentById(Long id) {
-        studentRepository.deleteById(id);
+    @Transactional
+    public StudentDTO create(StudentDTO dto) {
+        return Optional.of(dto)
+                .map(mapper::toEntity)
+                .map(repository::save)
+                .map(mapper::toDto)
+                .orElseThrow();
     }
 
-    public List<LessonDTO> getLessonsForStudentForDay(Long id, ZonedDateTime day) {
-        ZonedDateTime from = day.truncatedTo(ChronoUnit.DAYS);
-        ZonedDateTime to = from.plusDays(1);
-        List<LessonEntity> lessons = lessonRepository.findAllLessonsByStudentIdAndDate(id, from, to);
-        return lessons.stream().map(lessonMapper::toDto).collect(Collectors.toList());
+    @Transactional
+    public Optional<StudentDTO> update(Long id, StudentDTO student) {
+        return repository.findById(id)
+                .map(entity -> mapper.toEntity(student))
+                .map(repository::saveAndFlush)
+                .map(mapper::toDto);
     }
 
-    public List<LessonDTO> getLessonsForStudentForMonth(Long id, ZonedDateTime month) {
-        ZonedDateTime from = month.truncatedTo(ChronoUnit.DAYS).withDayOfMonth(1);
-        ZonedDateTime to = from.plusMonths(1);
-        List<LessonEntity> lessons = lessonRepository.findAllLessonsByStudentIdAndDate(id, from, to);
-        return lessons.stream().map(lessonMapper::toDto).collect(Collectors.toList());
+    public boolean delete(Long id) {
+        return repository.findById(id)
+                .map(entity -> {
+                    repository.delete(entity);
+                    repository.flush();
+                    return true;
+                })
+                .orElse(false);
     }
 }
