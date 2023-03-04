@@ -35,7 +35,7 @@ create table if not exists teachers
     id         serial primary key,
     first_name varchar(32) not null,
     last_name  varchar(32) not null,
-    age        smallint    not null,
+    age        smallint,
     grade      varchar(32),
     experience int,
     email      varchar(64) unique,
