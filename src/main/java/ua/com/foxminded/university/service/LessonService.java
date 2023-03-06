@@ -32,9 +32,10 @@ public class LessonService {
                 .map(mapper::toDto);
     }
 
-    public Optional<LessonDTO> findById(Long id) {
+    public LessonDTO findById(Long id) {
         return repository.findById(id)
-                .map(mapper::toDto);
+                .map(mapper::toDto)
+                .orElseThrow(() ->new RuntimeException("lesson with id = " + id + " not found"));
     }
 
     @Transactional
@@ -47,11 +48,12 @@ public class LessonService {
     }
 
     @Transactional
-    public Optional<LessonDTO> update(Long id, LessonDTO lesson) {
-        return repository.findById(id)
+    public LessonDTO update(LessonDTO lesson) {
+        return repository.findById(lesson.getId())
                 .map(entity -> mapper.toEntity(lesson))
                 .map(repository::saveAndFlush)
-                .map(mapper::toDto);
+                .map(mapper::toDto)
+                .orElseThrow(() -> new RuntimeException("lesson with id = " + lesson.getId() + " not found"));
     }
 
     public boolean delete(Long id) {
