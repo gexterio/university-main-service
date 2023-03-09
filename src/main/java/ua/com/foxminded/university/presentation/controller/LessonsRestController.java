@@ -3,10 +3,10 @@ package ua.com.foxminded.university.presentation.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +37,8 @@ public class LessonsRestController {
     @GetMapping("/students/{id}/lessons")
     public List<LessonDTO> findLessonsForStudent(@PathVariable("id") Long id,
                                                  @RequestParam("range") String range,
-                                                 @RequestBody String isoDate) {
+                                                 @RequestParam("isoDate")
+                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String isoDate) {
         if (range.equals("day")) {
             ZonedDateTime day = ZonedDateTime.parse(isoDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
             return service.findLessonsForStudentForDay(id, day);
@@ -51,7 +52,8 @@ public class LessonsRestController {
     @GetMapping("/teachers/{id}/lessons")
     public List<LessonDTO> findLessonsForTeacher(@PathVariable("id") Long id,
                                                  @RequestParam("range") String range,
-                                                 @RequestBody String isoDate) {
+                                                 @RequestParam("isoDate")
+                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String isoDate) {
         if (range.equals("day")) {
             ZonedDateTime day = ZonedDateTime.parse(isoDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
             return service.findLessonsForTeacherForDay(id, day);
