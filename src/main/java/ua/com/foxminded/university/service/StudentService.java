@@ -28,9 +28,10 @@ public class StudentService {
                 .map(mapper::toDto);
     }
 
-    public Optional<StudentDTO> findById(Long id) {
+    public StudentDTO findById(Long id) {
         return repository.findById(id)
-                .map(mapper::toDto);
+                .map(mapper::toDto)
+                .orElseThrow(() -> new RuntimeException("student with id = " + id + " not found"));
     }
 
     @Transactional
@@ -43,11 +44,12 @@ public class StudentService {
     }
 
     @Transactional
-    public Optional<StudentDTO> update(Long id, StudentDTO student) {
-        return repository.findById(id)
+    public StudentDTO update(StudentDTO student) {
+        return repository.findById(student.getId())
                 .map(entity -> mapper.toEntity(student))
                 .map(repository::saveAndFlush)
-                .map(mapper::toDto);
+                .map(mapper::toDto)
+                .orElseThrow(() -> new RuntimeException("student with id = " + student.getId() + " not found"));
     }
 
     public boolean delete(Long id) {

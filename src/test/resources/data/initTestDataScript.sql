@@ -48,3 +48,14 @@ values (1, 60, 1, 'Web Development Fundamentals', '2023-02-22 00:33:02.716164', 
        (8, 60, 2, 'Artificial Intelligence and Machine Learning', '2023-02-22 22:33:02.757773', 2, 3),
        (9, 30, 3, 'Artificial Intelligence and Machine Learning', '2023-02-11 22:33:02.762680', 3, 3),
        (10, 120, 3, 'Mobile Application Development', '2023-02-19 23:33:02.767549', 3, 3);
+
+SELECT pg_catalog.setval(
+               pg_get_serial_sequence('lessons', 'id'),
+               (SELECT MAX(id) FROM "public"."lessons") + 1);
+
+SELECT pg_catalog.setval(
+               pg_get_serial_sequence('students', 'id'),
+               (SELECT MAX(id) FROM "public"."students") + 1);
+SELECT pg_catalog.setval(
+               pg_get_serial_sequence('teachers', 'id'),
+               (SELECT MAX(id) FROM "public"."teachers") + 1);
