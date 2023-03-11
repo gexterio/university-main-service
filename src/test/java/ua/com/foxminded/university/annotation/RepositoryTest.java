@@ -1,7 +1,9 @@
-package ua.com.foxminded.university.unit.persistance.annotation;
+package ua.com.foxminded.university.annotation;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,7 +12,9 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@ActiveProfiles("test")
+@Testcontainers
+@Transactional
 @SpringBootTest
-@ActiveProfiles("unitTest")
-public @interface UnitTest {
+public @interface RepositoryTest {
 }

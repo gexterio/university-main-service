@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.com.foxminded.university.consumer.dto.FacultyDTO;
 import ua.com.foxminded.university.consumer.dto.GroupDTO;
-import ua.com.foxminded.university.unit.persistance.annotation.UnitTest;
+import ua.com.foxminded.university.annotation.UnitTest;
 import ua.com.foxminded.university.persistance.model.FacultyEntity;
 import ua.com.foxminded.university.persistance.model.GroupEntity;
 import ua.com.foxminded.university.util.modelmapper.GroupMapper;

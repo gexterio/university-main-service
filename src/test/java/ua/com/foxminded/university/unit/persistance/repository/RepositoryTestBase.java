@@ -5,7 +5,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
-import ua.com.foxminded.university.unit.persistance.annotation.RepositoryTest;
+import ua.com.foxminded.university.annotation.RepositoryTest;
 
 
 @RepositoryTest

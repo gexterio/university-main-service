@@ -7,7 +7,7 @@ import ua.com.foxminded.university.consumer.dto.GroupDTO;
 import ua.com.foxminded.university.consumer.dto.LessonDTO;
 import ua.com.foxminded.university.consumer.dto.SubjectDTO;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
-import ua.com.foxminded.university.unit.persistance.annotation.UnitTest;
+import ua.com.foxminded.university.annotation.UnitTest;
 import ua.com.foxminded.university.persistance.model.GroupEntity;
 import ua.com.foxminded.university.persistance.model.LessonEntity;
 import ua.com.foxminded.university.persistance.model.SubjectEntity;
