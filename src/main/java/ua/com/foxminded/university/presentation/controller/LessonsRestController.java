@@ -1,8 +1,6 @@
 package ua.com.foxminded.university.presentation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,11 +25,6 @@ public class LessonsRestController {
     @Autowired
     public LessonsRestController(LessonService service) {
         this.service = service;
-    }
-
-    @GetMapping("/lessons")
-    public Page<LessonDTO> findAll(Pageable pageable) {
-        return service.findAll(pageable);
     }
 
     @GetMapping("/students/{id}/lessons")
