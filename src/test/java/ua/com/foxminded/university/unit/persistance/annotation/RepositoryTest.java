@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.persistance.annotation;
+package ua.com.foxminded.university.unit.persistance.annotation;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

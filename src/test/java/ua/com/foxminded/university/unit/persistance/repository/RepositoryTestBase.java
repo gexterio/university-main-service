@@ -1,11 +1,11 @@
-package ua.com.foxminded.university.persistance.repository;
+package ua.com.foxminded.university.unit.persistance.repository;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
-import ua.com.foxminded.university.persistance.annotation.RepositoryTest;
+import ua.com.foxminded.university.unit.persistance.annotation.RepositoryTest;
 
 
 @RepositoryTest

@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.presentation.controller;
+package ua.com.foxminded.university.unit.presentation.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
+import ua.com.foxminded.university.presentation.controller.StudentRestController;
 import ua.com.foxminded.university.service.StudentService;
 
 import java.util.ArrayList;
