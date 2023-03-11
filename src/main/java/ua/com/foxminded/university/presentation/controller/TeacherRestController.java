@@ -36,7 +36,7 @@ public class TeacherRestController {
 
     @GetMapping("/{id}")
     public TeacherDTO findById(@PathVariable("id") Long id) {
-        return service.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return service.findById(id);
     }
 
     @PostMapping
@@ -46,9 +46,8 @@ public class TeacherRestController {
     }
 
     @PutMapping("/{id}")
-    public TeacherDTO update(@PathVariable("id") Long id, @RequestBody TeacherDTO teacher) {
-        return service.update(id, teacher)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public TeacherDTO update(@RequestBody TeacherDTO teacher) {
+        return service.update(teacher);
     }
 
     @DeleteMapping("/{id}")
