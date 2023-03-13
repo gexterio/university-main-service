@@ -10,9 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import ua.com.foxminded.university.consumer.dto.TeacherDTO;
-import ua.com.foxminded.university.presentation.controller.TeacherRestController;
-import ua.com.foxminded.university.service.TeacherService;
+import ua.com.foxminded.university.consumer.dto.StudentDTO;
+import ua.com.foxminded.university.presentation.controller.StudentRestController;
+import ua.com.foxminded.university.service.StudentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +23,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(TeacherRestController.class)
-@ActiveProfiles("unitTest")
-class TeacherRestControllerTest {
+@WebMvcTest(StudentRestController.class)
+@ActiveProfiles("unitTests")
+class StudentsRestControllerTest {
 
     @MockBean
-    TeacherService service;
+    StudentService service;
 
     @Autowired
     MockMvc mockMvc;
@@ -36,18 +36,18 @@ class TeacherRestControllerTest {
 
     @Test
     void findAll_returnedPageOfDto_Exists() throws Exception {
-        List<TeacherDTO> teacherList = List.of(
-                new TeacherDTO.Builder().setId(1L).setFirstName("FirstName").setLastName("LastName").build(),
-                new TeacherDTO.Builder().setId(2L).setFirstName("FirstName1").setLastName("LastName1").build(),
-                new TeacherDTO.Builder().setId(3L).setFirstName("FirstName2").setLastName("LastName2").build());
+        List<StudentDTO> studentList = List.of(
+                new StudentDTO.Builder().setId(1L).setFirstName("FirstName").setLastName("LastName").build(),
+                new StudentDTO.Builder().setId(2L).setFirstName("FirstName1").setLastName("LastName1").build(),
+                new StudentDTO.Builder().setId(3L).setFirstName("FirstName2").setLastName("LastName2").build());
         Pageable pageable = PageRequest.of(0, 20);
-        Page<TeacherDTO> page = new PageImpl<>(teacherList, pageable, teacherList.size());
+        Page<StudentDTO> page = new PageImpl<>(studentList, pageable, studentList.size());
         when(service.findAll(pageable)).thenReturn(page);
-        mockMvc.perform(get("/api/v1/teachers")
+        mockMvc.perform(get("/api/v1/students")
                         .param("page", String.valueOf(pageable.getPageNumber()))
                         .param("size", String.valueOf(pageable.getPageSize())))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content.length()").value(teacherList.size()))
+                .andExpect(jsonPath("$.content.length()").value(studentList.size()))
                 .andExpect(jsonPath("$.content[0].firstName").value("FirstName"))
                 .andExpect(jsonPath("$.content[0].lastName").value("LastName"))
                 .andExpect(jsonPath("$.content[1].firstName").value("FirstName1"))
@@ -59,15 +59,15 @@ class TeacherRestControllerTest {
 
     @Test
     void findAll_returnedEmptyPageOfDto_NotExists() throws Exception {
-        List<TeacherDTO> teacherList = new ArrayList<>();
+        List<StudentDTO> studentList = new ArrayList<>();
         Pageable pageable = PageRequest.of(0, 20);
-        Page<TeacherDTO> page = new PageImpl<>(teacherList, pageable, teacherList.size());
+        Page<StudentDTO> page = new PageImpl<>(studentList, pageable, studentList.size());
         when(service.findAll(pageable)).thenReturn(page);
-        mockMvc.perform(get("/api/v1/teachers")
+        mockMvc.perform(get("/api/v1/students")
                         .param("page", String.valueOf(pageable.getPageNumber()))
                         .param("size", String.valueOf(pageable.getPageSize())))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content.length()").value(teacherList.size()))
+                .andExpect(jsonPath("$.content.length()").value(studentList.size()))
                 .andDo(print());
     }
 }
