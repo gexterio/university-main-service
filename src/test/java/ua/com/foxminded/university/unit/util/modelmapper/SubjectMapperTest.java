@@ -3,12 +3,12 @@ package ua.com.foxminded.university.unit.util.modelmapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import ua.com.foxminded.university.annotation.MappersTest;
 import ua.com.foxminded.university.consumer.dto.SubjectDTO;
-import ua.com.foxminded.university.annotation.UnitTest;
 import ua.com.foxminded.university.persistance.model.SubjectEntity;
 import ua.com.foxminded.university.util.modelmapper.SubjectMapper;
 
-@UnitTest
+@MappersTest
 class SubjectMapperTest {
 
     @Autowired
