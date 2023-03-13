@@ -17,7 +17,7 @@ public class SubjectDTO {
     public SubjectDTO() {
     }
 
-    public SubjectDTO(SubjectDTOBuilder builder) {
+    public SubjectDTO(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
@@ -29,7 +29,7 @@ public class SubjectDTO {
         this.description = entity.getDescription();
     }
 
-    public static class SubjectDTOBuilder {
+    public static class Builder {
 
         private Long id;
 
@@ -38,17 +38,17 @@ public class SubjectDTO {
         private String description;
 
 
-        public SubjectDTOBuilder setDescription(String description) {
+        public Builder setDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public SubjectDTOBuilder setId(Long id) {
+        public Builder setId(Long id) {
             this.id = id;
             return this;
         }
 
-        public SubjectDTOBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }

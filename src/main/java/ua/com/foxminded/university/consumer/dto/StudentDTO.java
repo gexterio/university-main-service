@@ -23,7 +23,7 @@ public class StudentDTO {
 
     }
 
-    public StudentDTO(StudentDTOBuilder builder) {
+    public StudentDTO(Builder builder) {
         this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
@@ -42,7 +42,7 @@ public class StudentDTO {
         this.email = entity.getEmail();
     }
 
-    public static class StudentDTOBuilder {
+    public static class Builder {
 
         private Long id;
 
@@ -59,37 +59,37 @@ public class StudentDTO {
         private String email;
 
 
-        public StudentDTOBuilder setFirstName(String firstName) {
+        public Builder setFirstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public StudentDTOBuilder setLastName(String lastName) {
+        public Builder setLastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        public StudentDTOBuilder setId(Long id) {
+        public Builder setId(Long id) {
             this.id = id;
             return this;
         }
 
-        public StudentDTOBuilder setAge(Byte age) {
+        public Builder setAge(Byte age) {
             this.age = age;
             return this;
         }
 
-        public StudentDTOBuilder setGroup(GroupDTO group) {
+        public Builder setGroup(GroupDTO group) {
             this.group = group;
             return this;
         }
 
-        public StudentDTOBuilder setCourse(Byte course) {
+        public Builder setCourse(Byte course) {
             this.course = course;
             return this;
         }
 
-        public StudentDTOBuilder setEmail(String email) {
+        public Builder setEmail(String email) {
             this.email = email;
             return this;
         }
