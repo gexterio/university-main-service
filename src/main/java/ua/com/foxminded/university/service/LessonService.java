@@ -48,7 +48,7 @@ public class LessonService {
     }
 
     public List<LessonDTO> findLessonsForTeacherForMonth(Long id, ZonedDateTime month) {
-        ZonedDateTime from = month.truncatedTo(ChronoUnit.DAYS);
+        ZonedDateTime from = month.truncatedTo(ChronoUnit.DAYS).withDayOfMonth(1);
         ZonedDateTime to = from.plusMonths(1);
         return repository.findAllLessonsByTeacherIdAndDate(id, from, to).stream()
                 .map(mapper::toDto)
