@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
 import ua.com.foxminded.university.persistance.repository.TeacherRepository;
+import ua.com.foxminded.university.service.exception.TeacherAlreadyExistException;
+import ua.com.foxminded.university.service.exception.TeacherNotFoundException;
 import ua.com.foxminded.university.util.modelmapper.TeacherMapper;
 
 import java.util.Optional;
@@ -31,11 +33,14 @@ public class TeacherService {
     public TeacherDTO findById(Long id) {
         return repository.findById(id)
                 .map(mapper::toDto)
-                .orElseThrow(() -> new RuntimeException("teacher with id = " + id + " not found"));
+                .orElseThrow(() -> new TeacherNotFoundException(id));
     }
 
     @Transactional
     public TeacherDTO create(TeacherDTO dto) {
+        if (dto.getId() != null) {
+            throw new TeacherAlreadyExistException(dto.getId());
+        }
         return Optional.of(dto)
                 .map(mapper::toEntity)
                 .map(repository::save)
@@ -49,7 +54,7 @@ public class TeacherService {
                 .map(entity -> mapper.toEntity(student))
                 .map(repository::saveAndFlush)
                 .map(mapper::toDto)
-                .orElseThrow(() -> new RuntimeException("student with id = " + student.getId() + " not found"));
+                .orElseThrow(() -> new TeacherNotFoundException(student.getId()));
     }
 
     public boolean delete(Long id) {
@@ -59,7 +64,7 @@ public class TeacherService {
                     repository.flush();
                     return true;
                 })
-                .orElse(false);
+                .orElseThrow(() -> new TeacherNotFoundException(id));
     }
 
 
