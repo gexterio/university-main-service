@@ -30,14 +30,14 @@ public class TeacherService {
                 .map(mapper::toDto);
     }
 
-    public TeacherDTO findById(Long id) {
+    public TeacherDTO findById(Long id) throws TeacherNotFoundException {
         return repository.findById(id)
                 .map(mapper::toDto)
                 .orElseThrow(() -> new TeacherNotFoundException(id));
     }
 
     @Transactional
-    public TeacherDTO create(TeacherDTO dto) {
+    public TeacherDTO create(TeacherDTO dto) throws TeacherAlreadyExistException {
         if (dto.getId() != null) {
             throw new TeacherAlreadyExistException(dto.getId());
         }
@@ -49,7 +49,7 @@ public class TeacherService {
     }
 
     @Transactional
-    public TeacherDTO update(TeacherDTO student) {
+    public TeacherDTO update(TeacherDTO student) throws TeacherNotFoundException {
         return repository.findById(student.getId())
                 .map(entity -> mapper.toEntity(student))
                 .map(repository::saveAndFlush)
@@ -57,7 +57,7 @@ public class TeacherService {
                 .orElseThrow(() -> new TeacherNotFoundException(student.getId()));
     }
 
-    public boolean delete(Long id) {
+    public boolean delete(Long id) throws TeacherNotFoundException {
         return repository.findById(id)
                 .map(entity -> {
                     repository.delete(entity);

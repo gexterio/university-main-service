@@ -30,7 +30,7 @@ public class StudentService {
                 .map(mapper::toDto);
     }
 
-    public StudentDTO findById(Long id) throws StudentNotFoundException{
+    public StudentDTO findById(Long id) throws StudentNotFoundException {
         return repository.findById(id)
                 .map(mapper::toDto)
                 .orElseThrow(() -> new StudentNotFoundException(id));
@@ -49,7 +49,7 @@ public class StudentService {
     }
 
     @Transactional
-    public StudentDTO update(StudentDTO student) throws StudentNotFoundException{
+    public StudentDTO update(StudentDTO student) throws StudentNotFoundException {
         return repository.findById(student.getId())
                 .map(entity -> mapper.toEntity(student))
                 .map(repository::saveAndFlush)
