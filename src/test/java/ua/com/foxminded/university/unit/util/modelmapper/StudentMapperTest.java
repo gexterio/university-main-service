@@ -1,15 +1,16 @@
-package ua.com.foxminded.university.util.modelmapper;
+package ua.com.foxminded.university.unit.util.modelmapper;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import ua.com.foxminded.university.annotation.MappersTest;
 import ua.com.foxminded.university.consumer.dto.GroupDTO;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
-import ua.com.foxminded.university.persistance.annotation.UnitTest;
 import ua.com.foxminded.university.persistance.model.GroupEntity;
 import ua.com.foxminded.university.persistance.model.StudentEntity;
+import ua.com.foxminded.university.util.modelmapper.StudentMapper;
 
-@UnitTest
+@MappersTest
 class StudentMapperTest {
 
     @Autowired

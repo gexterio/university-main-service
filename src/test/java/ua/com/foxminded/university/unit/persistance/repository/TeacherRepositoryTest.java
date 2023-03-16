@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.persistance.repository;
+package ua.com.foxminded.university.unit.persistance.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,6 +7,7 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import ua.com.foxminded.university.persistance.model.TeacherEntity;
 
 import java.util.Optional;
+import ua.com.foxminded.university.persistance.repository.TeacherRepository;
 
 class TeacherRepositoryTest extends RepositoryTestBase {
 

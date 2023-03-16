@@ -1,7 +1,7 @@
-package ua.com.foxminded.university.persistance.repository;
+package ua.com.foxminded.university.unit.persistance.repository;
 
 import org.springframework.test.context.jdbc.Sql;
-import ua.com.foxminded.university.persistance.annotation.RepositoryTest;
+import ua.com.foxminded.university.annotation.RepositoryTest;
 
 
 @RepositoryTest

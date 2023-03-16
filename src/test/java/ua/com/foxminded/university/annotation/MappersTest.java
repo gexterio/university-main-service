@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.persistance.annotation;
+package ua.com.foxminded.university.annotation;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @SpringBootTest
-@ActiveProfiles("unitTest")
-public @interface UnitTest {
+@ActiveProfiles("repositoryTest")
+public @interface MappersTest {
 }

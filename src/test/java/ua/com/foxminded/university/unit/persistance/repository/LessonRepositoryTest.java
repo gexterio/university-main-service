@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.persistance.repository;
+package ua.com.foxminded.university.unit.persistance.repository;
 
 
 import org.junit.jupiter.api.Assertions;
@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import ua.com.foxminded.university.persistance.model.LessonEntity;
+import ua.com.foxminded.university.persistance.repository.LessonRepository;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
