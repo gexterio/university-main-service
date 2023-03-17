@@ -1,6 +1,5 @@
 package ua.com.foxminded.university.persistance.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,8 +34,7 @@ public class StudentEntity {
     @Column(name = "course")
     private Byte course;
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private GroupEntity group;
 
