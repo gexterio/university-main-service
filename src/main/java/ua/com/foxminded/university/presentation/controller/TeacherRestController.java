@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
 import ua.com.foxminded.university.service.TeacherService;
-import ua.com.foxminded.university.service.exception.TeacherAlreadyExistException;
-import ua.com.foxminded.university.service.exception.TeacherNotFoundException;
 
 @RestController
 @RequestMapping("/api/v1/teachers")
@@ -38,42 +36,24 @@ public class TeacherRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TeacherDTO> findById(@PathVariable("id") Long id) {
-        try {
-            return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
-        } catch (TeacherNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(new TeacherDTO(), HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<TeacherDTO> create(@RequestBody TeacherDTO teacher) {
-        try {
-            return new ResponseEntity<>(service.create(teacher), HttpStatus.CREATED);
-        } catch (TeacherAlreadyExistException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(teacher, HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(service.create(teacher), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TeacherDTO> update(@RequestBody TeacherDTO teacher) {
-        try {
-            return new ResponseEntity<>(service.update(teacher), HttpStatus.OK);
-        } catch (TeacherNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(teacher, HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(service.update(teacher), HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
-        try {
-            return new ResponseEntity<>(service.delete(id), HttpStatus.NO_CONTENT);
-        } catch (TeacherNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(service.delete(id), HttpStatus.NO_CONTENT);
     }
 }
+

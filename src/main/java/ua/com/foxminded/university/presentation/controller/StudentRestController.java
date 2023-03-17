@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
 import ua.com.foxminded.university.service.StudentService;
-import ua.com.foxminded.university.service.exception.StudentAlreadyExistException;
-import ua.com.foxminded.university.service.exception.StudentNotFoundException;
 
 @RestController
 @RequestMapping("/api/v1/students")
@@ -36,42 +34,22 @@ public class StudentRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> findById(@PathVariable("id") Long id) {
-        try {
-            return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
-        } catch (StudentNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(new StudentDTO(), HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<StudentDTO> create(@RequestBody StudentDTO student) {
-        try {
-            return new ResponseEntity<>(service.create(student), HttpStatus.CREATED);
-        } catch (StudentAlreadyExistException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(student, HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(service.create(student), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<StudentDTO> update(@RequestBody StudentDTO student) {
-        try {
-            return new ResponseEntity<>(service.update(student), HttpStatus.OK);
-        } catch (StudentNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(student, HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(service.update(student), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
-        try {
-            return new ResponseEntity<>(service.delete(id), HttpStatus.NO_CONTENT);
-        } catch (StudentNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(service.delete(id), HttpStatus.NO_CONTENT);
     }
 }
 
