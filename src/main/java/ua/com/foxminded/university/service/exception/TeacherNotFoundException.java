@@ -1,13 +1,12 @@
 package ua.com.foxminded.university.service.exception;
 
-public class TeacherNotFoundException extends ServiceException {
+public class TeacherNotFoundException extends RuntimeException {
 
-    private static final String NOT_FOUND_WITH_ID= "Teacher with this ID not found. ID = ";
-
+    public static final String TEACHER_WITH_ID_NOT_FOUND = "Teacher with ID = %d not found!";
 
 
     public TeacherNotFoundException(Long id) {
-        super(NOT_FOUND_WITH_ID+id);
+        super(String.format(TEACHER_WITH_ID_NOT_FOUND, id));
     }
 
     public TeacherNotFoundException(String message, Throwable cause) {
