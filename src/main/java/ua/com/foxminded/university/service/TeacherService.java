@@ -38,8 +38,9 @@ public class TeacherService {
 
     @Transactional
     public TeacherDTO create(TeacherDTO dto) throws TeacherAlreadyExistException {
-        if (dto.getId() != null) {
-            throw new TeacherAlreadyExistException(dto.getId());
+        Long id = dto.getId();
+        if (id != null && repository.findById(id).isPresent()) {
+            throw new TeacherAlreadyExistException(id);
         }
         return Optional.of(dto)
                 .map(mapper::toEntity)

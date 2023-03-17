@@ -38,8 +38,9 @@ public class StudentService {
 
     @Transactional
     public StudentDTO create(StudentDTO dto) throws StudentAlreadyExistException {
-        if (dto.getId() != null) {
-            throw new StudentAlreadyExistException(dto.getId());
+        Long id = dto.getId();
+        if (id != null && repository.findById(id).isPresent()) {
+            throw new StudentAlreadyExistException(id);
         }
         return Optional.of(dto)
                 .map(mapper::toEntity)
@@ -63,6 +64,7 @@ public class StudentService {
                     repository.delete(entity);
                     repository.flush();
                     return true;
+
                 })
                 .orElseThrow(() -> new StudentNotFoundException(id));
     }
