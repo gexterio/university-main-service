@@ -2,24 +2,37 @@ package ua.com.foxminded.university.service.exception.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import ua.com.foxminded.university.service.exception.ExceptionMessage;
 import ua.com.foxminded.university.service.exception.StudentAlreadyExistException;
 import ua.com.foxminded.university.service.exception.StudentNotFoundException;
 
-@RestControllerAdvice
-public class StudentRestControllerExceptionHandler extends ResponseEntityExceptionHandler {
+import java.time.ZonedDateTime;
+
+@ControllerAdvice
+public class StudentRestControllerExceptionHandler {
 
     @ExceptionHandler(value = StudentNotFoundException.class)
-    private ResponseEntity<Object> handleStudentNotFoundException(StudentNotFoundException e) {
-        e.printStackTrace();
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    private ResponseEntity<ExceptionMessage> handleStudentNotFoundException(StudentNotFoundException e, WebRequest request) {
+        ExceptionMessage message = new ExceptionMessage(
+                HttpStatus.NOT_FOUND.value(),
+                ZonedDateTime.now(),
+                e.getMessage(),
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = StudentAlreadyExistException.class)
-    private ResponseEntity<Object> handeStudentAlreadyExistException(StudentAlreadyExistException e) {
-        e.printStackTrace();
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    private ResponseEntity<ExceptionMessage> handeStudentAlreadyExistException(StudentAlreadyExistException e, WebRequest request) {
+        ExceptionMessage message = new ExceptionMessage(
+                HttpStatus.BAD_REQUEST.value(),
+                ZonedDateTime.now(),
+                e.getMessage(),
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }

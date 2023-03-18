@@ -66,7 +66,7 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
         mockMvc.perform(get(uri))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof TeacherNotFoundException))
-                .andExpect(content().contentType("text/plain;charset=UTF-8"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
 
