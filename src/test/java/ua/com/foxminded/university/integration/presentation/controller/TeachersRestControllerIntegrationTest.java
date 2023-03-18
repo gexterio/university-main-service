@@ -1,10 +1,12 @@
 package ua.com.foxminded.university.integration.presentation.controller;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
+import ua.com.foxminded.university.service.exception.TeacherNotFoundException;
 
 import java.util.List;
 
@@ -20,9 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTestBase {
 
     private final Long id = 1L;
+    private final Long notExistId = 999999L;
 
     @Test
-    void findAll_returnedPageOfTeachers_Exists() throws Exception {
+    void findAll_returnedPageOfTeachers_exists() throws Exception {
         List<TeacherDTO> teacherList = List.of(
                 new TeacherDTO.Builder().setId(id).setFirstName("Andrew").setLastName("Moore").build(),
                 new TeacherDTO.Builder().setId(id + 1).setFirstName("Paul").setLastName("Garcia").build(),
@@ -45,9 +48,9 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
     }
 
     @Test
-    void findById_returnedTeacher_Exists() throws Exception {
+    void findById_returnedTeacher_exists() throws Exception {
         TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("Andrew").setLastName("Moore").build();
-        String uri = String.format("/api/v1/teachers/%d", id);
+        String uri = String.format("/api/v1/teachers/%d", teacher.getId());
         mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -58,7 +61,17 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
     }
 
     @Test
-    void create_returnedTeacherAndPutItIntoDataBase_InputIsValidTeacherDTO() throws Exception {
+    void findById_returnedException_notExists() throws Exception {
+        String uri = String.format("/api/v1/teachers/%d", notExistId);
+        mockMvc.perform(get(uri))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof TeacherNotFoundException))
+                .andExpect(content().contentType("text/plain;charset=UTF-8"))
+                .andDo(print());
+    }
+
+    @Test
+    void create_returnedTeacherAndPutItIntoDataBase_inputIsValidTeacherDTO() throws Exception {
         TeacherDTO teacher = new TeacherDTO.Builder().setFirstName("Bob").setLastName("Morley").build();
         String uri = "/api/v1/teachers";
         mockMvc.perform(post(uri)
@@ -74,9 +87,22 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
     }
 
     @Test
-    void update_returnedUpdatedTeacher_Exists() throws Exception {
+    void create_returnedException_alreadyExistTeacher() throws Exception {
+        TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("Bob").setLastName("Morley").build();
+        String uri = "/api/v1/teachers";
+        mockMvc.perform(post(uri)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(teacher))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(print());
+    }
+
+    @Test
+    void update_returnedUpdatedTeacher_exists() throws Exception {
         TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("NewName").setLastName("NewLastName").build();
-        String uri = String.format("/api/v1/teachers/%d", id);
+        String uri = String.format("/api/v1/teachers/%d", teacher.getId());
 
         mockMvc.perform(put(uri)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -87,11 +113,35 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
     }
 
     @Test
-    void delete_responseStatusCode204_Exists() throws Exception {
+    void update_returnedException_notExists() throws Exception {
+        TeacherDTO teacher = new TeacherDTO.Builder().setId(notExistId).setFirstName("NewName").setLastName("NewLastName").build();
+        String uri = String.format("/api/v1/teachers/%d", teacher.getId());
+
+        mockMvc.perform(put(uri)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(teacher))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof TeacherNotFoundException))
+                .andDo(print());
+    }
+
+    @Test
+    void delete_responseStatusCode204_exists() throws Exception {
         String uri = String.format("/api/v1/teachers/%d", id);
 
         mockMvc.perform(delete(uri))
                 .andExpect(status().isNoContent())
+                .andDo(print());
+    }
+
+    @Test
+    void delete_returnedException_exists() throws Exception {
+        String uri = String.format("/api/v1/teachers/%d", notExistId);
+
+        mockMvc.perform(delete(uri))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof TeacherNotFoundException))
                 .andDo(print());
     }
 
