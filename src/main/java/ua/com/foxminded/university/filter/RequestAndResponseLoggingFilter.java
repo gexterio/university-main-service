@@ -67,6 +67,7 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
         } else {
             msg.append(String.format("%s %s?%s", request.getMethod(), request.getRequestURL(), queryString)).append("\n");
         }
+        msg.append(request.getContentType()).append("\n");
         Collections.list(request.getHeaderNames())
                 .forEach(headerName ->
                         Collections.list(request.getHeaders(headerName))
@@ -87,6 +88,7 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
     private static void logResponseHeaders(ContentCachingResponseWrapper response, StringBuilder msg) {
         int status = response.getStatus();
         msg.append(String.format("%s: %s", status, HttpStatus.valueOf(status).getReasonPhrase())).append("\n");
+        msg.append(response.getContentType()).append("\n");
         response.getHeaderNames()
                 .forEach(headerName ->
                         response.getHeaders(headerName)
