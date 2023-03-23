@@ -16,7 +16,7 @@ public class PointCuts {
     public void isAnyFindByIdServiceMethod() {
     }
 
-    @Pointcut("execution(public  * findAll(*))")
+    @Pointcut("execution(public * findAll(*))")
     public void isAnyFindAllServiceMethod() {
     }
 
@@ -30,5 +30,9 @@ public class PointCuts {
 
     @Pointcut("execution(public * delete(*))")
     public void isAnyDeleteServiceMethod() {
+    }
+
+    @Pointcut("execution(public * findLessons*(*,*))")
+    public void isAnyFindLessonsServiceMethod() {
     }
 }

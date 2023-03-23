@@ -9,6 +9,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
 @Component
 @Aspect
 public class LoggingAspect {
@@ -99,6 +102,29 @@ public class LoggingAspect {
             return result;
         } catch (Throwable e) {
             log.warn("Can't delete entity from Database. Cause: {}. ID: {}", e.getMessage(), id);
+            throw e;
+        }
+    }
+
+    @Around("PointCuts.isServiceLayer() && PointCuts.isAnyFindLessonsServiceMethod()" +
+            "&&args(id, date)")
+    public Object addLoggingAroundServiceFindLessonsMethod(ProceedingJoinPoint joinPoint, Long id, ZonedDateTime date) throws Throwable {
+        long startTime = System.currentTimeMillis();
+        log.info("Trying to get lessons from Database: ID = {}, Date = {}", id, date);
+        try {
+            Object result = joinPoint.proceed();
+            long time = System.currentTimeMillis() - startTime;
+            if (result instanceof List<?>) {
+                List<?> lessons = (List<?>) result;
+                if (!lessons.isEmpty()) {
+                    log.info("Lesson(s) for entity with ID = {} was found in {}ms: count = {}. {}", id, time, lessons.size(), lessons);
+                } else {
+                    log.info("Lesson(s) for entity with ID = {} was not found in {}ms: {}", id, time, lessons);
+                }
+            }
+            return result;
+        } catch (Throwable e) {
+            log.warn("I don't know what can go wrong here but if you see this message something is unexpected.");
             throw e;
         }
     }
