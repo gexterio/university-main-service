@@ -21,6 +21,7 @@ import ua.com.foxminded.university.service.TeacherService;
 
 @RestController
 @RequestMapping("/api/v1/teachers")
+@Validated
 public class TeacherRestController {
 
     private final TeacherService service;
