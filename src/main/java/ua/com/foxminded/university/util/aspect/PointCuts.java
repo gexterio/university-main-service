@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.aspect;
+package ua.com.foxminded.university.util.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
