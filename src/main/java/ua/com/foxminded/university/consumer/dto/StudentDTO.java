@@ -1,22 +1,38 @@
 package ua.com.foxminded.university.consumer.dto;
 
+import ua.com.foxminded.university.util.validation.AdultStudent;
 import ua.com.foxminded.university.persistance.model.StudentEntity;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class StudentDTO {
+
     private Long id;
 
+    @NotBlank
+    @Size(min = 3, max = 32)
     private String firstName;
 
+    @NotBlank
+    @Size(min = 3, max = 32)
     private String lastName;
 
+    @AdultStudent
     private Byte age;
 
     private GroupDTO group;
 
+    @NotNull
+    @Positive
     private Byte course;
 
+
+    @Email
     private String email;
 
     public StudentDTO() {

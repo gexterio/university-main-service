@@ -1,17 +1,38 @@
 package ua.com.foxminded.university.consumer.dto;
 
 
+import ua.com.foxminded.university.util.validation.AdultTeacher;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class TeacherDTO {
 
     private Long id;
+
+    @NotBlank
+    @Size(min = 3,max = 32)
     private String firstName;
+
+    @NotBlank
+    @Size(min = 3,max = 32)
     private String lastName;
+
+    @AdultTeacher
     private Byte age;
+
+    @Size(min = 3, max = 32)
     private String grade;
+
+    @Positive
     private Integer experience;
+
+    @Email
     private String email;
+
     private FacultyDTO faculty;
 
 
