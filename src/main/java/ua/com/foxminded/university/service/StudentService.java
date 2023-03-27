@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
 import ua.com.foxminded.university.persistance.repository.StudentRepository;
+import ua.com.foxminded.university.service.exception.StudentAlreadyExistException;
+import ua.com.foxminded.university.service.exception.StudentNotFoundException;
 import ua.com.foxminded.university.util.modelmapper.StudentMapper;
 
 import java.util.Optional;
@@ -28,14 +30,18 @@ public class StudentService {
                 .map(mapper::toDto);
     }
 
-    public StudentDTO findById(Long id) {
+    public StudentDTO findById(Long id) throws StudentNotFoundException {
         return repository.findById(id)
                 .map(mapper::toDto)
-                .orElseThrow(() -> new RuntimeException("student with id = " + id + " not found"));
+                .orElseThrow(() -> new StudentNotFoundException(id));
     }
 
     @Transactional
-    public StudentDTO create(StudentDTO dto) {
+    public StudentDTO create(StudentDTO dto) throws StudentAlreadyExistException {
+        Long id = dto.getId();
+        if (id != null && repository.findById(id).isPresent()) {
+            throw new StudentAlreadyExistException(id);
+        }
         return Optional.of(dto)
                 .map(mapper::toEntity)
                 .map(repository::save)
@@ -44,21 +50,22 @@ public class StudentService {
     }
 
     @Transactional
-    public StudentDTO update(StudentDTO student) {
+    public StudentDTO update(StudentDTO student) throws StudentNotFoundException {
         return repository.findById(student.getId())
                 .map(entity -> mapper.toEntity(student))
                 .map(repository::saveAndFlush)
                 .map(mapper::toDto)
-                .orElseThrow(() -> new RuntimeException("student with id = " + student.getId() + " not found"));
+                .orElseThrow(() -> new StudentNotFoundException(student.getId()));
     }
 
-    public boolean delete(Long id) {
+    public boolean delete(Long id) throws StudentNotFoundException {
         return repository.findById(id)
                 .map(entity -> {
                     repository.delete(entity);
                     repository.flush();
                     return true;
+
                 })
-                .orElse(false);
+                .orElseThrow(() -> new StudentNotFoundException(id));
     }
 }

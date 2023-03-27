@@ -1,10 +1,13 @@
 package ua.com.foxminded.university.integration.presentation.controller;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
+import ua.com.foxminded.university.service.exception.StudentAlreadyExistException;
+import ua.com.foxminded.university.service.exception.StudentNotFoundException;
 
 import java.util.List;
 
@@ -21,9 +24,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTestBase {
 
     private final Long id = 1L;
+    private final Long notExistId = 999999L;
 
     @Test
-    void findAll_returnedPageOfStudents_Exists() throws Exception {
+    void findAll_returnedPageOfStudents_exists() throws Exception {
         List<StudentDTO> studentList = List.of(
                 new StudentDTO.Builder().setId(id).setFirstName("John").setLastName("Smith").build(),
                 new StudentDTO.Builder().setId(id + 1).setFirstName("Daniel").setLastName("Lopez").build(),
@@ -46,9 +50,9 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
     }
 
     @Test
-    void findById_returnedStudent_Exists() throws Exception {
+    void findById_returnedStudent_exists() throws Exception {
         StudentDTO student = new StudentDTO.Builder().setId(id).setFirstName("John").setLastName("Smith").build();
-        String uri = String.format("/api/v1/students/%d", id);
+        String uri = String.format("/api/v1/students/%d", student.getId());
         mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -59,7 +63,18 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
     }
 
     @Test
-    void create_returnedStudentAndPutItIntoDataBase_InputIsValidStudentDTO() throws Exception {
+    void findById_returnedException_notExists() throws Exception {
+        String uri = String.format("/api/v1/students/%d", notExistId);
+        mockMvc.perform(get(uri))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof StudentNotFoundException))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON
+                ))
+                .andDo(print());
+    }
+
+    @Test
+    void create_returnedStudentAndPutItIntoDataBase_inputIsValidStudentDTO() throws Exception {
         StudentDTO student = new StudentDTO.Builder().setFirstName("Bob").setLastName("Morley").build();
         String uri = "/api/v1/students";
         mockMvc.perform(post(uri)
@@ -75,9 +90,23 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
     }
 
     @Test
-    void update_returnedUpdatedStudent_Exists() throws Exception {
+    void create_returnedException_alreadyExistStudent() throws Exception {
+        StudentDTO student = new StudentDTO.Builder().setId(id).setFirstName("Bob").setLastName("Morley").build();
+        String uri = "/api/v1/students";
+        mockMvc.perform(post(uri)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(student))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof StudentAlreadyExistException))
+                .andDo(print());
+    }
+
+    @Test
+    void update_returnedUpdatedStudent_exists() throws Exception {
         StudentDTO student = new StudentDTO.Builder().setId(id).setFirstName("NewName").setLastName("NewLastName").build();
-        String uri = String.format("/api/v1/students/%d", id);
+        String uri = String.format("/api/v1/students/%d", student.getId());
 
         mockMvc.perform(put(uri)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -88,11 +117,35 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
     }
 
     @Test
-    void delete_responseStatusCode204_Exists() throws Exception {
+    void update_returnedException_notExists() throws Exception {
+        StudentDTO student = new StudentDTO.Builder().setId(notExistId).setFirstName("NewName").setLastName("NewLastName").build();
+        String uri = String.format("/api/v1/students/%d", student.getId());
+
+        mockMvc.perform(put(uri)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(student))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof StudentNotFoundException))
+                .andDo(print());
+    }
+
+    @Test
+    void delete_responseStatusCode204_exists() throws Exception {
         String uri = String.format("/api/v1/students/%d", id);
 
         mockMvc.perform(delete(uri))
                 .andExpect(status().isNoContent())
+                .andDo(print());
+    }
+
+    @Test
+    void delete_returnedException_exists() throws Exception {
+        String uri = String.format("/api/v1/students/%d", notExistId);
+
+        mockMvc.perform(delete(uri))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof StudentNotFoundException))
                 .andDo(print());
     }
 

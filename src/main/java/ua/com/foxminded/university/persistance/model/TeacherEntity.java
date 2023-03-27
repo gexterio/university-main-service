@@ -41,8 +41,7 @@ public class TeacherEntity {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private FacultyEntity faculty;
 

@@ -23,32 +23,32 @@ public class LessonService {
         this.mapper = mapper;
     }
 
-    public List<LessonDTO> findLessonsForStudentForDay(Long id, ZonedDateTime day) {
-        ZonedDateTime from = day.truncatedTo(ChronoUnit.DAYS);
+    public List<LessonDTO> findLessonsForStudentForDay(Long id, ZonedDateTime date) {
+        ZonedDateTime from = date.truncatedTo(ChronoUnit.DAYS);
         ZonedDateTime to = from.plusDays(1);
         return repository.findAllLessonsByStudentIdAndDate(id, from, to).stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public List<LessonDTO> findLessonsForStudentForMonth(Long id, ZonedDateTime month) {
-        ZonedDateTime from = month.truncatedTo(ChronoUnit.DAYS).withDayOfMonth(1);
+    public List<LessonDTO> findLessonsForStudentForMonth(Long id, ZonedDateTime date) {
+        ZonedDateTime from = date.truncatedTo(ChronoUnit.DAYS).withDayOfMonth(1);
         ZonedDateTime to = from.plusMonths(1);
         return repository.findAllLessonsByStudentIdAndDate(id, from, to).stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public List<LessonDTO> findLessonsForTeacherForDay(Long id, ZonedDateTime day) {
-        ZonedDateTime from = day.truncatedTo(ChronoUnit.DAYS);
+    public List<LessonDTO> findLessonsForTeacherForDay(Long id, ZonedDateTime date) {
+        ZonedDateTime from = date.truncatedTo(ChronoUnit.DAYS);
         ZonedDateTime to = from.plusDays(1);
         return repository.findAllLessonsByTeacherIdAndDate(id, from, to).stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public List<LessonDTO> findLessonsForTeacherForMonth(Long id, ZonedDateTime month) {
-        ZonedDateTime from = month.truncatedTo(ChronoUnit.DAYS).withDayOfMonth(1);
+    public List<LessonDTO> findLessonsForTeacherForMonth(Long id, ZonedDateTime date) {
+        ZonedDateTime from = date.truncatedTo(ChronoUnit.DAYS).withDayOfMonth(1);
         ZonedDateTime to = from.plusMonths(1);
         return repository.findAllLessonsByTeacherIdAndDate(id, from, to).stream()
                 .map(mapper::toDto)
