@@ -34,7 +34,7 @@ public class LessonsRestController {
     public List<LessonDTO> findLessonsForStudent(@PathVariable("id") Long studentId,
                                                  @RequestParam("range") @TimeRange String range,
                                                  @RequestParam("isoDate")
-                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String isoDate) {
+                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @ZonedDateTimePattern String isoDate) {
         if ("day".equals(range)) {
             ZonedDateTime day = ZonedDateTime.parse(isoDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
             return service.findLessonsForStudentForDay(studentId, day);
