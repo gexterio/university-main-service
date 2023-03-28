@@ -31,31 +31,31 @@ public class LessonsRestController {
     }
 
     @GetMapping("/students/{id}/lessons")
-    public List<LessonDTO> findLessonsForStudent(@PathVariable("id") Long studentId,
-                                                 @RequestParam("range") @TimeRange String range,
+    public List<LessonDTO> findLessonsForStudent(@PathVariable("id") Long id,
+                                                 @RequestParam("range") String range,
                                                  @RequestParam("isoDate")
                                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @ZonedDateTimePattern String isoDate) {
         if ("day".equals(range)) {
             ZonedDateTime day = ZonedDateTime.parse(isoDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
-            return service.findLessonsForStudentForDay(studentId, day);
+            return service.findLessonsForStudentForDay(id, day);
         } else if ("month".equals(range)) {
             ZonedDateTime month = ZonedDateTime.parse(isoDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
-            return service.findLessonsForStudentForMonth(studentId, month);
+            return service.findLessonsForStudentForMonth(id, month);
         } else return Collections.emptyList();
     }
 
 
     @GetMapping("/teachers/{id}/lessons")
-    public List<LessonDTO> findLessonsForTeacher(@PathVariable("id") Long teacherId,
-                                                 @RequestParam("range") @Validated @TimeRange String range,
+    public List<LessonDTO> findLessonsForTeacher(@PathVariable("id") Long id,
+                                                 @RequestParam("range") String range,
                                                  @RequestParam("isoDate")
                                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @ZonedDateTimePattern String isoDate) {
         if ("day".equals(range)) {
             ZonedDateTime day = ZonedDateTime.parse(isoDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
-            return service.findLessonsForTeacherForDay(teacherId, day);
+            return service.findLessonsForTeacherForDay(id, day);
         } else if ("month".equals(range)) {
             ZonedDateTime month = ZonedDateTime.parse(isoDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
-            return service.findLessonsForTeacherForMonth(teacherId, month);
+            return service.findLessonsForTeacherForMonth(id, month);
         } else return Collections.emptyList();
     }
 }
