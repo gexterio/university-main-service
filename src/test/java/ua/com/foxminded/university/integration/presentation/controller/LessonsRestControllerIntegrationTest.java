@@ -6,14 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import ua.com.foxminded.university.consumer.dto.LessonDTO;
-import ua.com.foxminded.university.util.validation.TimeRange;
-import ua.com.foxminded.university.util.validation.ZonedDateTimePattern;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -152,8 +147,7 @@ class LessonsRestControllerIntegrationTest extends RestControllerIntegrationTest
     @Test
     void findLessonsForStudent_returnedBadRequestWithConstraintViolationException_paramRangeIsInvalid() throws Exception {
         String range = "InvalidRange";
-        Optional<Method> optional = Arrays.stream(TimeRange.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        String message = "findLessonsForStudent.range: " + optional.get().getDefaultValue();
+        String message = "findLessonsForStudent.range: Parameter is invalid! Valid Parameters are: day, month";
 
         mockMvc.perform(get("/api/v1/students/" + ID + "/lessons")
                         .param("range", range)
@@ -166,8 +160,7 @@ class LessonsRestControllerIntegrationTest extends RestControllerIntegrationTest
     @Test
     void findLessonsForTeacher_returnedBadRequestWithConstraintViolationException_paramRangeIsInvalid() throws Exception {
         String range = "InvalidRange";
-        Optional<Method> optional = Arrays.stream(TimeRange.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        String message = "findLessonsForTeacher.range: " + optional.get().getDefaultValue();
+        String message = "findLessonsForTeacher.range: Parameter is invalid! Valid Parameters are: day, month";
 
         mockMvc.perform(get("/api/v1/teachers/" + ID + "/lessons")
                         .param("range", range)
@@ -204,8 +197,7 @@ class LessonsRestControllerIntegrationTest extends RestControllerIntegrationTest
     @Test
     void findLessonsForStudent_returnedBadRequestWithConstraintViolationException_paramIsoDateIsInvalid() throws Exception {
         String range = "day";
-        Optional<Method> optional = Arrays.stream(ZonedDateTimePattern.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        String message = "findLessonsForStudent.isoDate: " + optional.get().getDefaultValue();
+        String message = "findLessonsForStudent.isoDate: Parameter is not matches with pattern! It should look like: '2011-12-03T10:15:30+01:00[Europe/Paris]'";
 
         String isoDateInvalid = "20900009-02-22T14:33:02.716164+00:00";
         mockMvc.perform(get("/api/v1/students/" + ID + "/lessons")
@@ -219,8 +211,7 @@ class LessonsRestControllerIntegrationTest extends RestControllerIntegrationTest
     @Test
     void findLessonsForTeacher_returnedBadRequestWithConstraintViolationException_paramIsoDateIsInvalid() throws Exception {
         String range = "day";
-        Optional<Method> optional = Arrays.stream(ZonedDateTimePattern.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        String message = "findLessonsForTeacher.isoDate: " + optional.get().getDefaultValue();
+        String message = "findLessonsForTeacher.isoDate: Parameter is not matches with pattern! It should look like: '2011-12-03T10:15:30+01:00[Europe/Paris]'";
 
         String isoDate = "2023423499-02-22T14:33:02.716164+00:00";
         mockMvc.perform(get("/api/v1/teachers/" + ID + "/lessons")

@@ -2,14 +2,10 @@ package ua.com.foxminded.university.util.validation.validator;
 
 import org.junit.jupiter.api.Test;
 import ua.com.foxminded.university.consumer.dto.GroupDTO;
-import ua.com.foxminded.university.util.validation.GroupNamePattern;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,9 +20,7 @@ class GroupNamePatternValidatorTest {
     void isValid_thrownViolation_groupNameIsNull() {
         group.setName(null);
         int expectedSize = 2;
-        Optional<Method> optional = Arrays.stream(GroupNamePattern.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        assertTrue(optional.isPresent());
-        String message = optional.get().getDefaultValue().toString();
+        String message = "Group name should be match the patter: [A-Z]{2}-\\d{2}, like AA-11";
         Set<ConstraintViolation<GroupDTO>> violations = validator.validate(group);
         ConstraintViolation<GroupDTO> violation = violations.stream().filter(v -> v.getMessage().startsWith("Group name should be match")).findFirst().get();
         assertEquals(expectedSize, violations.size());
@@ -38,9 +32,7 @@ class GroupNamePatternValidatorTest {
     void isValid_thrownViolation_groupNameNotMatchesThePattern() {
         group.setName("InvalidName");
         int expectedSize = 1;
-        Optional<Method> optional = Arrays.stream(GroupNamePattern.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        assertTrue(optional.isPresent());
-        String message = optional.get().getDefaultValue().toString();
+        String message = "Group name should be match the patter: [A-Z]{2}-\\d{2}, like AA-11";
         Set<ConstraintViolation<GroupDTO>> violations = validator.validate(group);
         ConstraintViolation<GroupDTO> violation = violations.stream().findFirst().get();
         assertEquals(expectedSize, violations.size());

@@ -2,14 +2,10 @@ package ua.com.foxminded.university.util.validation.validator;
 
 import org.junit.jupiter.api.Test;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
-import ua.com.foxminded.university.util.validation.AdultStudent;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,9 +20,7 @@ class AdultStudentValidatorTest {
     void isValid_thrownViolation_studentAgeIsNull() {
         student.setAge(null);
         int expectedSize = 1;
-        Optional<Method> optional = Arrays.stream(AdultStudent.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        assertTrue(optional.isPresent());
-        String message = optional.get().getDefaultValue().toString();
+        String message = "Student should be older than 18";
         Set<ConstraintViolation<StudentDTO>> violations = validator.validate(student);
         ConstraintViolation<StudentDTO> violation = violations.stream().findFirst().get();
         assertEquals(expectedSize, violations.size());
@@ -38,9 +32,8 @@ class AdultStudentValidatorTest {
     void isValid_thrownViolation_studentAgeIsLessThan18() {
         student.setAge((byte) 17);
         int expectedSize = 1;
-        Optional<Method> optional = Arrays.stream(AdultStudent.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        assertTrue(optional.isPresent());
-        String message = optional.get().getDefaultValue().toString();
+
+        String message = "Student should be older than 18";
         Set<ConstraintViolation<StudentDTO>> violations = validator.validate(student);
         ConstraintViolation<StudentDTO> violation = violations.stream().findFirst().get();
         assertEquals(expectedSize, violations.size());

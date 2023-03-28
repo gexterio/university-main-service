@@ -2,15 +2,11 @@ package ua.com.foxminded.university.util.validation.validator;
 
 import org.junit.jupiter.api.Test;
 import ua.com.foxminded.university.consumer.dto.LessonDTO;
-import ua.com.foxminded.university.util.validation.NotPast;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,9 +21,7 @@ class NotPastValidatorTest {
     void isValid_thrownViolation_lessonStartTimeIsNull() {
         lesson.setStartTime(null);
         int expectedSize = 1;
-        Optional<Method> optional = Arrays.stream(NotPast.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        assertTrue(optional.isPresent());
-        String message = optional.get().getDefaultValue().toString();
+        String message = "Lesson can't start in the past =)";
         Set<ConstraintViolation<LessonDTO>> violations = validator.validate(lesson);
         ConstraintViolation<LessonDTO> violation = violations.stream().findFirst().get();
         assertEquals(expectedSize, violations.size());
@@ -39,9 +33,7 @@ class NotPastValidatorTest {
     void isValid_thrownViolation_lessonStartTimeInPast() {
         lesson.setStartTime(ZonedDateTime.now().minusDays(1));
         int expectedSize = 1;
-        Optional<Method> optional = Arrays.stream(NotPast.class.getMethods()).filter(m -> m.getName().equals("message")).findFirst();
-        assertTrue(optional.isPresent());
-        String message = optional.get().getDefaultValue().toString();
+        String message = "Lesson can't start in the past =)";
         Set<ConstraintViolation<LessonDTO>> violations = validator.validate(lesson);
         ConstraintViolation<LessonDTO> violation = violations.stream().findFirst().get();
         assertEquals(expectedSize, violations.size());

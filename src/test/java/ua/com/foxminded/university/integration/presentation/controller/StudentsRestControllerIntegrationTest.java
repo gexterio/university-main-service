@@ -75,7 +75,7 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
 
     @Test
     void create_returnedStudentAndPutItIntoDataBase_inputIsValidStudentDTO() throws Exception {
-        StudentDTO student = new StudentDTO.Builder().setFirstName("Bob").setLastName("Morley").build();
+        StudentDTO student = new StudentDTO.Builder().setFirstName("Bob").setLastName("Morley").setAge((byte) 19).setCourse((byte) 1).build();
         String uri = "/api/v1/students";
         mockMvc.perform(post(uri)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -91,7 +91,7 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
 
     @Test
     void create_returnedException_alreadyExistStudent() throws Exception {
-        StudentDTO student = new StudentDTO.Builder().setId(id).setFirstName("Bob").setLastName("Morley").build();
+        StudentDTO student = new StudentDTO.Builder().setId(id).setFirstName("Bob").setLastName("Morley").setAge((byte) 19).setCourse((byte) 1).build();
         String uri = "/api/v1/students";
         mockMvc.perform(post(uri)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -105,7 +105,7 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
 
     @Test
     void update_returnedUpdatedStudent_exists() throws Exception {
-        StudentDTO student = new StudentDTO.Builder().setId(id).setFirstName("NewName").setLastName("NewLastName").build();
+        StudentDTO student = new StudentDTO.Builder().setId(id).setFirstName("NewName").setLastName("NewLastName").setAge((byte) 19).setCourse((byte) 1).build();
         String uri = String.format("/api/v1/students/%d", student.getId());
 
         mockMvc.perform(put(uri)
@@ -118,7 +118,7 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
 
     @Test
     void update_returnedException_notExists() throws Exception {
-        StudentDTO student = new StudentDTO.Builder().setId(notExistId).setFirstName("NewName").setLastName("NewLastName").build();
+        StudentDTO student = new StudentDTO.Builder().setId(notExistId).setFirstName("NewName").setLastName("NewLastName").setAge((byte) 19).setCourse((byte) 1).build();
         String uri = String.format("/api/v1/students/%d", student.getId());
 
         mockMvc.perform(put(uri)
