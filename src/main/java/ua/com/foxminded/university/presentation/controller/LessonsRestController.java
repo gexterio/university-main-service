@@ -32,7 +32,7 @@ public class LessonsRestController {
 
     @GetMapping("/students/{id}/lessons")
     public List<LessonDTO> findLessonsForStudent(@PathVariable("id") Long id,
-                                                 @RequestParam("range") String range,
+                                                 @RequestParam("range") @TimeRange String range,
                                                  @RequestParam("isoDate")
                                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @ZonedDateTimePattern String isoDate) {
         if ("day".equals(range)) {
@@ -47,7 +47,7 @@ public class LessonsRestController {
 
     @GetMapping("/teachers/{id}/lessons")
     public List<LessonDTO> findLessonsForTeacher(@PathVariable("id") Long id,
-                                                 @RequestParam("range") String range,
+                                                 @RequestParam("range") @TimeRange String range,
                                                  @RequestParam("isoDate")
                                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @ZonedDateTimePattern String isoDate) {
         if ("day".equals(range)) {
