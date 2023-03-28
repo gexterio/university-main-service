@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
 import ua.com.foxminded.university.presentation.controller.TeacherRestController;
-import ua.com.foxminded.university.service.TeacherService;
+import ua.com.foxminded.university.consumer.service.TeacherService;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
-import ua.com.foxminded.university.service.TeacherService;
+import ua.com.foxminded.university.consumer.service.TeacherService;
 
 @RestController
 @RequestMapping("/api/v1/teachers")

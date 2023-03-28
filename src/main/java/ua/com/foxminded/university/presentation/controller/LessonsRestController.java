@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.foxminded.university.consumer.dto.LessonDTO;
-import ua.com.foxminded.university.service.LessonService;
+import ua.com.foxminded.university.consumer.service.LessonService;
 import ua.com.foxminded.university.util.validation.TimeRange;
 import ua.com.foxminded.university.util.validation.ZonedDateTimePattern;
 

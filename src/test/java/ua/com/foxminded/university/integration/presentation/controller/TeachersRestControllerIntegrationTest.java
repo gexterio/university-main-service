@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
-import ua.com.foxminded.university.service.exception.TeacherNotFoundException;
+ import ua.com.foxminded.university.consumer.exception.TeacherNotFoundException;
 
 import java.util.List;
 

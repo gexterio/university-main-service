@@ -1,13 +1,13 @@
-package ua.com.foxminded.university.service.exception.handler;
+package ua.com.foxminded.university.consumer.exception.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import ua.com.foxminded.university.service.exception.ExceptionMessage;
-import ua.com.foxminded.university.service.exception.StudentAlreadyExistException;
-import ua.com.foxminded.university.service.exception.StudentNotFoundException;
+import ua.com.foxminded.university.consumer.exception.ExceptionMessage;
+import ua.com.foxminded.university.consumer.exception.StudentAlreadyExistException;
+import ua.com.foxminded.university.consumer.exception.StudentNotFoundException;
 
 import java.time.ZonedDateTime;
 

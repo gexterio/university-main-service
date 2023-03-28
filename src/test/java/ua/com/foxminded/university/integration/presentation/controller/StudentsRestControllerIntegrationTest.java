@@ -6,8 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
-import ua.com.foxminded.university.service.exception.StudentAlreadyExistException;
-import ua.com.foxminded.university.service.exception.StudentNotFoundException;
+import ua.com.foxminded.university.consumer.exception.StudentAlreadyExistException;
+import ua.com.foxminded.university.consumer.exception.StudentNotFoundException;
 
 import java.util.List;
 
