@@ -1,6 +1,10 @@
 package ua.com.foxminded.university.presentation.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,27 +35,68 @@ public class TeacherRestController {
         this.service = service;
     }
 
+    @Operation(summary = "Get operation for all Teachers",
+            description = "Get operation for all Teachers as pageable list",
+            parameters = {
+                    @Parameter(name = "pageable", description = "pageable object")},
+            responses = {
+                    @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json")}, description = "Teacher received successfully")
+            })
     @GetMapping()
     public Page<TeacherDTO> findAll(Pageable pageable) {
         return service.findAll(pageable);
     }
 
+    @Operation(summary = "Get operation for Teacher by id",
+            description = "Get operation for Teacher by id",
+            parameters = {
+                    @Parameter(name = "id", description = "id of the Teacher", example = "10")
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Teacher received successfully", content = {@Content(mediaType = "application/json")}),
+                    @ApiResponse(responseCode = "404", description = "Teacher not found", content = {@Content(mediaType = "application/json")})
+            })
     @GetMapping("/{id}")
     public ResponseEntity<TeacherDTO> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
+    @Operation(summary = "Add operation for Teacher by id",
+            description = "Adding Student into database",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.
+                    RequestBody(description = "Teacher for adding"),
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Teacher added successfully", content = {@Content(mediaType = "application/json")}),
+                    @ApiResponse(responseCode = "400", description = "Teacher don't added. Student not valid or already exists", content = {@Content(mediaType = "application/json")})
+            })
     @PostMapping
     public ResponseEntity<TeacherDTO> create(@RequestBody @Validated TeacherDTO teacher) {
         return new ResponseEntity<>(service.create(teacher), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Update operation for Teacher by id",
+            description = "Updating Teacher in database",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.
+                    RequestBody(description = "Teacher for updating"),
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Teacher updated successfully", content = {@Content(mediaType = "application/json")}),
+                    @ApiResponse(responseCode = "404", description = "Teacher don't Updated. Teacher not found", content = {@Content(mediaType = "application/json")}),
+                    @ApiResponse(responseCode = "400", description = "Teacher don't Updated. Teacher not valid", content = {@Content(mediaType = "application/json")})
+            })
     @PutMapping("/{id}")
     public ResponseEntity<TeacherDTO> update(@RequestBody @Validated TeacherDTO teacher) {
         return new ResponseEntity<>(service.update(teacher), HttpStatus.OK);
     }
 
-
+    @Operation(summary = "Teacher operation for Student by id",
+            description = "Teacher operation for Student from database by id",
+            parameters = {
+                    @Parameter(name = "id", description = "id of the Teacher", example = "10")
+            },
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Teacher deleted successfully", content = {@Content(mediaType = "application/json")}),
+                    @ApiResponse(responseCode = "404", description = "Teacher can't be deleted. Student found", content = {@Content(mediaType = "application/json")})
+            })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
