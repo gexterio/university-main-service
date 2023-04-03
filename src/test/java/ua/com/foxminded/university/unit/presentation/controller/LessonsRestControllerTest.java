@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.com.foxminded.university.consumer.dto.LessonDTO;
 import ua.com.foxminded.university.presentation.controller.LessonsRestController;
-import ua.com.foxminded.university.service.LessonService;
+import ua.com.foxminded.university.consumer.service.LessonService;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;

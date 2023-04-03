@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
-import ua.com.foxminded.university.service.StudentService;
+import ua.com.foxminded.university.consumer.service.StudentService;
 
 @RestController
 @RequestMapping("/api/v1/students")
@@ -38,12 +39,12 @@ public class StudentRestController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentDTO> create(@RequestBody StudentDTO student) {
+    public ResponseEntity<StudentDTO> create(@RequestBody @Validated StudentDTO student) {
         return new ResponseEntity<>(service.create(student), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDTO> update(@RequestBody StudentDTO student) {
+    public ResponseEntity<StudentDTO> update(@RequestBody @ Validated StudentDTO student) {
         return new ResponseEntity<>(service.update(student), HttpStatus.OK);
     }
 

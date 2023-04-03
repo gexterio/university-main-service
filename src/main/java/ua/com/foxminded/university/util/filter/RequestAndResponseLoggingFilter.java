@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.filter;
+package ua.com.foxminded.university.util.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

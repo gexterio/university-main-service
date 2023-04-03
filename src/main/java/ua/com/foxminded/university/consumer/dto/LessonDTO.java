@@ -1,5 +1,11 @@
 package ua.com.foxminded.university.consumer.dto;
 
+import ua.com.foxminded.university.util.validation.NotPast;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -7,10 +13,15 @@ public class LessonDTO {
 
     private Long id;
 
+    @NotBlank
+    @Size(min = 3, max = 64)
     private String name;
 
+    @NotNull
+    @Positive
     private Integer duration;
 
+    @NotPast
     private ZonedDateTime startTime;
 
     private SubjectDTO subject;

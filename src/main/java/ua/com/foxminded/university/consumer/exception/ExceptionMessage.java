@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.service.exception;
+package ua.com.foxminded.university.consumer.exception;
 
 import java.time.ZonedDateTime;
 

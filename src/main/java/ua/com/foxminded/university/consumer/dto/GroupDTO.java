@@ -1,11 +1,16 @@
 package ua.com.foxminded.university.consumer.dto;
 
+import ua.com.foxminded.university.util.validation.GroupNamePattern;
+
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 public class GroupDTO {
 
     private Long id;
 
+    @NotBlank
+    @GroupNamePattern
     private String name;
 
     private FacultyDTO faculty;

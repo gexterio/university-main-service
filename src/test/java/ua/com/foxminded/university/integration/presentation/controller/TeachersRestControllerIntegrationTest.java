@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
-import ua.com.foxminded.university.service.exception.TeacherNotFoundException;
+ import ua.com.foxminded.university.consumer.exception.TeacherNotFoundException;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
 
     @Test
     void findById_returnedTeacher_exists() throws Exception {
-        TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("Andrew").setLastName("Moore").build();
+        TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("Andrew").setLastName("Moore").setAge((byte) 22).build();
         String uri = String.format("/api/v1/teachers/%d", teacher.getId());
         mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
@@ -72,7 +72,7 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
 
     @Test
     void create_returnedTeacherAndPutItIntoDataBase_inputIsValidTeacherDTO() throws Exception {
-        TeacherDTO teacher = new TeacherDTO.Builder().setFirstName("Bob").setLastName("Morley").build();
+        TeacherDTO teacher = new TeacherDTO.Builder().setFirstName("Bob").setLastName("Morley").setAge((byte) 22).build();
         String uri = "/api/v1/teachers";
         mockMvc.perform(post(uri)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -88,7 +88,7 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
 
     @Test
     void create_returnedException_alreadyExistTeacher() throws Exception {
-        TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("Bob").setLastName("Morley").build();
+        TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("Bob").setLastName("Morley").setAge((byte) 22).build();
         String uri = "/api/v1/teachers";
         mockMvc.perform(post(uri)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -101,7 +101,7 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
 
     @Test
     void update_returnedUpdatedTeacher_exists() throws Exception {
-        TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("NewName").setLastName("NewLastName").build();
+        TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("NewName").setLastName("NewLastName").setAge((byte) 22).build();
         String uri = String.format("/api/v1/teachers/%d", teacher.getId());
 
         mockMvc.perform(put(uri)
@@ -114,7 +114,7 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
 
     @Test
     void update_returnedException_notExists() throws Exception {
-        TeacherDTO teacher = new TeacherDTO.Builder().setId(notExistId).setFirstName("NewName").setLastName("NewLastName").build();
+        TeacherDTO teacher = new TeacherDTO.Builder().setId(notExistId).setFirstName("NewName").setLastName("NewLastName").setAge((byte) 22).build();
         String uri = String.format("/api/v1/teachers/%d", teacher.getId());
 
         mockMvc.perform(put(uri)

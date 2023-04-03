@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.aspect;
+package ua.com.foxminded.university.util.aspect;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +19,7 @@ public class LoggingAspect {
     private final Logger log = LogManager.getLogger(this.getClass());
 
 
-    @Around("PointCuts.isServiceLayer() && PointCuts.isAnyFindAllServiceMethod()" +
+    @Around("ua.com.foxminded.university.util.aspect.PointCuts.isServiceLayer() && ua.com.foxminded.university.util.aspect.PointCuts.isAnyFindAllServiceMethod()" +
             "&& args(pageable)")
     public Object addLoggingAroundServiceFindAllMethod(ProceedingJoinPoint joinPoint, Pageable pageable) throws Throwable {
         long startTime = System.currentTimeMillis();
@@ -42,7 +42,7 @@ public class LoggingAspect {
     }
 
 
-    @Around("PointCuts.isServiceLayer() && PointCuts.isAnyFindByIdServiceMethod()" +
+    @Around("ua.com.foxminded.university.util.aspect.PointCuts.isServiceLayer() && ua.com.foxminded.university.util.aspect.PointCuts.isAnyFindByIdServiceMethod()" +
             "&& args(id)")
     public Object addLoggingAroundServiceFindByIdMethod(ProceedingJoinPoint joinPoint, Long id) throws Throwable {
         long startTime = System.currentTimeMillis();
@@ -58,7 +58,7 @@ public class LoggingAspect {
         }
     }
 
-    @Around("PointCuts.isServiceLayer() && PointCuts.isAnyCreateServiceMethod()" +
+    @Around("ua.com.foxminded.university.util.aspect.PointCuts.isServiceLayer() && ua.com.foxminded.university.util.aspect.PointCuts.isAnyCreateServiceMethod()" +
             "&& args(dto)")
     public Object addLoggingAroundServiceCreateMethod(ProceedingJoinPoint joinPoint, Object dto) throws Throwable {
         long startTime = System.currentTimeMillis();
@@ -74,7 +74,7 @@ public class LoggingAspect {
         }
     }
 
-    @Around("PointCuts.isServiceLayer() && PointCuts.isAnyUpdateServiceMethod()" +
+    @Around("ua.com.foxminded.university.util.aspect.PointCuts.isServiceLayer() && ua.com.foxminded.university.util.aspect.PointCuts.isAnyUpdateServiceMethod()" +
             "&& args(dto)")
     public Object addLoggingAroundServiceUpdateMethod(ProceedingJoinPoint joinPoint, Object dto) throws Throwable {
         long startTime = System.currentTimeMillis();
@@ -90,7 +90,7 @@ public class LoggingAspect {
         }
     }
 
-    @Around("PointCuts.isServiceLayer() && PointCuts.isAnyDeleteServiceMethod()" +
+    @Around("ua.com.foxminded.university.util.aspect.PointCuts.isServiceLayer() && ua.com.foxminded.university.util.aspect.PointCuts.isAnyDeleteServiceMethod()" +
             "&& args(id)")
     public Object addLoggingAroundServiceDeleteMethod(ProceedingJoinPoint joinPoint, Long id) throws Throwable {
         long startTime = System.currentTimeMillis();

@@ -1,46 +1,46 @@
-package ua.com.foxminded.university.service;
+package ua.com.foxminded.university.consumer.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.foxminded.university.consumer.dto.StudentDTO;
-import ua.com.foxminded.university.persistance.repository.StudentRepository;
-import ua.com.foxminded.university.service.exception.StudentAlreadyExistException;
-import ua.com.foxminded.university.service.exception.StudentNotFoundException;
-import ua.com.foxminded.university.util.modelmapper.StudentMapper;
+import ua.com.foxminded.university.consumer.dto.TeacherDTO;
+import ua.com.foxminded.university.consumer.exception.TeacherNotFoundException;
+import ua.com.foxminded.university.persistance.repository.TeacherRepository;
+import ua.com.foxminded.university.consumer.exception.TeacherAlreadyExistException;
+import ua.com.foxminded.university.util.modelmapper.TeacherMapper;
 
 import java.util.Optional;
 
 @Service
-public class StudentService {
+public class TeacherService {
 
-    private final StudentRepository repository;
-    private final StudentMapper mapper;
+    private final TeacherRepository repository;
+    private final TeacherMapper mapper;
 
     @Autowired
-    public StudentService(StudentRepository repository, StudentMapper mapper) {
+    public TeacherService(TeacherRepository repository, TeacherMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
-    public Page<StudentDTO> findAll(Pageable pageable) {
+    public Page<TeacherDTO> findAll(Pageable pageable) {
         return repository.findAll(pageable)
                 .map(mapper::toDto);
     }
 
-    public StudentDTO findById(Long id) throws StudentNotFoundException {
+    public TeacherDTO findById(Long id) throws TeacherNotFoundException {
         return repository.findById(id)
                 .map(mapper::toDto)
-                .orElseThrow(() -> new StudentNotFoundException(id));
+                .orElseThrow(() -> new TeacherNotFoundException(id));
     }
 
     @Transactional
-    public StudentDTO create(StudentDTO dto) throws StudentAlreadyExistException {
+    public TeacherDTO create(TeacherDTO dto) throws TeacherAlreadyExistException {
         Long id = dto.getId();
         if (id != null && repository.findById(id).isPresent()) {
-            throw new StudentAlreadyExistException(id);
+            throw new TeacherAlreadyExistException(id);
         }
         return Optional.of(dto)
                 .map(mapper::toEntity)
@@ -50,22 +50,23 @@ public class StudentService {
     }
 
     @Transactional
-    public StudentDTO update(StudentDTO student) throws StudentNotFoundException {
+    public TeacherDTO update(TeacherDTO student) throws TeacherNotFoundException {
         return repository.findById(student.getId())
                 .map(entity -> mapper.toEntity(student))
                 .map(repository::saveAndFlush)
                 .map(mapper::toDto)
-                .orElseThrow(() -> new StudentNotFoundException(student.getId()));
+                .orElseThrow(() -> new TeacherNotFoundException(student.getId()));
     }
 
-    public boolean delete(Long id) throws StudentNotFoundException {
+    public boolean delete(Long id) throws TeacherNotFoundException {
         return repository.findById(id)
                 .map(entity -> {
                     repository.delete(entity);
                     repository.flush();
                     return true;
-
                 })
-                .orElseThrow(() -> new StudentNotFoundException(id));
+                .orElseThrow(() -> new TeacherNotFoundException(id));
     }
+
+
 }
