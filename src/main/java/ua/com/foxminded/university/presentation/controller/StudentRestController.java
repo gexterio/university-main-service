@@ -78,7 +78,8 @@ public class StudentRestController {
                     RequestBody(description = "Student for updating"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "Student updated successfully", content = {@Content(mediaType = "application/json")}),
-                    @ApiResponse(responseCode = "404", description = "Student don't Updated. Student not valid or not found", content = {@Content(mediaType = "application/json")})
+                    @ApiResponse(responseCode = "404", description = "Student don't Updated. Student not found", content = {@Content(mediaType = "application/json")}),
+                    @ApiResponse(responseCode = "400", description = "Student don't Updated. Student not valid", content = {@Content(mediaType = "application/json")})
             })
     @PutMapping("/{id}")
     public ResponseEntity<StudentDTO> update(@RequestBody @Validated StudentDTO student) {
