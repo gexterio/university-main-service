@@ -9,11 +9,13 @@ import ua.com.foxminded.university.consumer.dto.TeacherDTO;
 import ua.com.foxminded.university.consumer.exception.TeacherNotFoundException;
 import ua.com.foxminded.university.persistance.repository.TeacherRepository;
 import ua.com.foxminded.university.consumer.exception.TeacherAlreadyExistException;
+import ua.com.foxminded.university.presentation.annotation.IsAdminRole;
 import ua.com.foxminded.university.util.modelmapper.TeacherMapper;
 
 import java.util.Optional;
 
 @Service
+@IsAdminRole
 public class TeacherService {
 
     private final TeacherRepository repository;

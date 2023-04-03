@@ -6,14 +6,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
-import ua.com.foxminded.university.persistance.repository.StudentRepository;
 import ua.com.foxminded.university.consumer.exception.StudentAlreadyExistException;
 import ua.com.foxminded.university.consumer.exception.StudentNotFoundException;
+import ua.com.foxminded.university.persistance.repository.StudentRepository;
+import ua.com.foxminded.university.presentation.annotation.IsAdminRole;
+import ua.com.foxminded.university.presentation.annotation.IsTeacherRole;
 import ua.com.foxminded.university.util.modelmapper.StudentMapper;
 
 import java.util.Optional;
 
 @Service
+@IsAdminRole
 public class StudentService {
 
     private final StudentRepository repository;
@@ -25,6 +28,7 @@ public class StudentService {
         this.mapper = mapper;
     }
 
+    @IsTeacherRole
     public Page<StudentDTO> findAll(Pageable pageable) {
         return repository.findAll(pageable)
                 .map(mapper::toDto);
