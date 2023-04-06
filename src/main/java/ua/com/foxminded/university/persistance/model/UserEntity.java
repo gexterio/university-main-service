@@ -2,11 +2,11 @@ package ua.com.foxminded.university.persistance.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
 
@@ -25,17 +25,11 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private Role role;
+    @ManyToOne()
+    @JoinColumn(name = "role_id")
+    private RoleEntity role;
 
     public UserEntity() {
-    }
-
-    public UserEntity(String username, String password, Role role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
     }
 
     public Long getId() {
@@ -62,11 +56,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public Role getRole() {
+    public RoleEntity getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(RoleEntity role) {
         this.role = role;
     }
 
@@ -89,7 +83,7 @@ public class UserEntity {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
+                ", role=" + role.getName() +
                 '}';
     }
 }
