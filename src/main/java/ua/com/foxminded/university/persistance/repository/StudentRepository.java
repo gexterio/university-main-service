@@ -7,4 +7,5 @@ import ua.com.foxminded.university.persistance.model.StudentEntity;
 @Repository
 public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 
+    StudentEntity findByEmail(String email);
 }
