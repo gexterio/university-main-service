@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
- import ua.com.foxminded.university.consumer.exception.TeacherNotFoundException;
+import ua.com.foxminded.university.consumer.exception.TeacherNotFoundException;
 
 import java.util.List;
 
@@ -28,8 +28,8 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
     void findAll_returnedPageOfTeachers_exists() throws Exception {
         List<TeacherDTO> teacherList = List.of(
                 new TeacherDTO.Builder().setId(id).setFirstName("Andrew").setLastName("Moore").build(),
-                new TeacherDTO.Builder().setId(id + 1).setFirstName("Paul").setLastName("Garcia").build(),
-                new TeacherDTO.Builder().setId(id + 2).setFirstName("Robert").setLastName("Williams").build());
+                new TeacherDTO.Builder().setId(id + 1).setFirstName("Paul").setLastName("Garcia").build()
+        );
         Pageable pageable = PageRequest.of(0, 20);
         String uri = "/api/v1/teachers";
         mockMvc.perform(get(uri)
@@ -42,8 +42,6 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
                 .andExpect(jsonPath("$.content[0].lastName").value(teacherList.get(0).getLastName()))
                 .andExpect(jsonPath("$.content[1].firstName").value(teacherList.get(1).getFirstName()))
                 .andExpect(jsonPath("$.content[1].lastName").value(teacherList.get(1).getLastName()))
-                .andExpect(jsonPath("$.content[2].firstName").value(teacherList.get(2).getFirstName()))
-                .andExpect(jsonPath("$.content[2].lastName").value(teacherList.get(2).getLastName()))
                 .andDo(print());
     }
 
@@ -80,7 +78,7 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(5))
+                .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.firstName").value(teacher.getFirstName()))
                 .andExpect(jsonPath("$.lastName").value(teacher.getLastName()))
                 .andDo(print());

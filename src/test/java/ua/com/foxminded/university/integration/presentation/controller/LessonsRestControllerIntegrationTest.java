@@ -3,6 +3,7 @@ package ua.com.foxminded.university.integration.presentation.controller;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import ua.com.foxminded.university.consumer.dto.LessonDTO;
@@ -61,6 +62,7 @@ class LessonsRestControllerIntegrationTest extends RestControllerIntegrationTest
     }
 
     @Test
+    @WithMockUser(username = "AndrewMoore600@email.com", password = "pass", roles = "TEACHER")
     void findLessonsForTeacher_returnedListOfLessons_existsAndRangeIsDay() throws Exception {
         mockMvc.perform(get("/api/v1/teachers/" + ID + "/lessons")
                         .param("range", "day")
@@ -74,6 +76,7 @@ class LessonsRestControllerIntegrationTest extends RestControllerIntegrationTest
     }
 
     @Test
+    @WithMockUser(username = "AndrewMoore600@email.com", password = "pass", roles = "TEACHER")
     void findLessonsForTeacher_returnedListOfLessons_existsAndRangeISMonth() throws Exception {
         mockMvc.perform(get("/api/v1/teachers/" + ID + "/lessons")
                         .param("range", "month")

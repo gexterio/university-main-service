@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
@@ -25,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(TeacherRestController.class)
 @ActiveProfiles("unitTest")
+@WithMockUser(username = "ADMIN", password = "pass", roles = "ADMIN")
 class TeachersRestControllerTest {
 
     @MockBean

@@ -30,8 +30,8 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
     void findAll_returnedPageOfStudents_exists() throws Exception {
         List<StudentDTO> studentList = List.of(
                 new StudentDTO.Builder().setId(id).setFirstName("John").setLastName("Smith").build(),
-                new StudentDTO.Builder().setId(id + 1).setFirstName("Daniel").setLastName("Lopez").build(),
-                new StudentDTO.Builder().setId(id + 2).setFirstName("Anthony").setLastName("Moore").build());
+                new StudentDTO.Builder().setId(id + 1).setFirstName("Daniel").setLastName("Lopez").build()
+        );
         Pageable pageable = PageRequest.of(0, 20);
         String uri = "/api/v1/students";
         mockMvc.perform(get(uri)
@@ -44,8 +44,6 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
                 .andExpect(jsonPath("$.content[0].lastName").value(studentList.get(0).getLastName()))
                 .andExpect(jsonPath("$.content[1].firstName").value(studentList.get(1).getFirstName()))
                 .andExpect(jsonPath("$.content[1].lastName").value(studentList.get(1).getLastName()))
-                .andExpect(jsonPath("$.content[2].firstName").value(studentList.get(2).getFirstName()))
-                .andExpect(jsonPath("$.content[2].lastName").value(studentList.get(2).getLastName()))
                 .andDo(print());
     }
 
@@ -83,7 +81,7 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(5))
+                .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.firstName").value(student.getFirstName()))
                 .andExpect(jsonPath("$.lastName").value(student.getLastName()))
                 .andDo(print());

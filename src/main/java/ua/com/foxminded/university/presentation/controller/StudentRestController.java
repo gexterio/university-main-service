@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
 import ua.com.foxminded.university.consumer.service.StudentService;
-import ua.com.foxminded.university.presentation.annotation.IsTeacherRole;
 
 
 @RestController
@@ -41,8 +40,6 @@ public class StudentRestController {
             responses = {
                     @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json")}, description = "Students received successfully")
             })
-
-    @IsTeacherRole
     @GetMapping()
     public Page<StudentDTO> findAll(Pageable pageable) {
         return service.findAll(pageable);
