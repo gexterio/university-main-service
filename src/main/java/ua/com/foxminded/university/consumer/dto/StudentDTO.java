@@ -187,7 +187,6 @@ public class StudentDTO {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", group=" + group.getName() +
                 ", course=" + course +
                 ", email='" + email + '\'' +
                 '}';
