@@ -10,7 +10,7 @@ import ua.com.foxminded.university.consumer.exception.StudentAlreadyExistExcepti
 import ua.com.foxminded.university.consumer.exception.StudentNotFoundException;
 import ua.com.foxminded.university.persistance.repository.StudentRepository;
 import ua.com.foxminded.university.presentation.annotation.IsAdminRole;
-import ua.com.foxminded.university.presentation.annotation.IsTeacherRole;
+import ua.com.foxminded.university.presentation.annotation.IsTeacherOrAdminRole;
 import ua.com.foxminded.university.util.modelmapper.StudentMapper;
 
 import java.util.Optional;
@@ -28,7 +28,7 @@ public class StudentService {
         this.mapper = mapper;
     }
 
-    @IsTeacherRole
+    @IsTeacherOrAdminRole
     public Page<StudentDTO> findAll(Pageable pageable) {
         return repository.findAll(pageable)
                 .map(mapper::toDto);
