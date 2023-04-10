@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
 import ua.com.foxminded.university.consumer.exception.TeacherNotFoundException;
 
 import java.util.List;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -141,6 +143,115 @@ class TeachersRestControllerIntegrationTest extends RestControllerIntegrationTes
                 .andExpect(status().isNotFound())
                 .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof TeacherNotFoundException))
                 .andDo(print());
+    }
+
+    @Test
+    void findAll_statusIsOkOrElseForbidden_userRoleIsAdmin() throws Exception {
+        Pageable pageable = PageRequest.of(0, 20);
+        String uri = "/api/v1/teachers";
+        for (UserDetails user : testUsers) {
+            if (user.getAuthorities().stream()
+                    .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()))) {
+                mockMvc.perform(get(uri)
+                                .param("page", "" + pageable.getPageNumber())
+                                .param("size", "" + pageable.getPageSize())
+                                .with(user(user)))
+                        .andExpect(status().isOk())
+                        .andDo(print());
+            } else
+                mockMvc.perform(get(uri)
+                                .param("page", "" + pageable.getPageNumber())
+                                .param("size", "" + pageable.getPageSize())
+                                .with(user(user)))
+                        .andExpect(status().isForbidden())
+                        .andDo(print());
+        }
+    }
+
+    @Test
+    void findById_statusIsOkOrElseForbidden_userRoleIsAdmin() throws Exception {
+        String uri = String.format("/api/v1/teachers/%d", id);
+        for (UserDetails user : testUsers) {
+            if (user.getAuthorities().stream()
+                    .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()))) {
+                mockMvc.perform(get(uri)
+                                .with(user(user)))
+                        .andExpect(status().isOk())
+                        .andDo(print());
+            } else
+                mockMvc.perform(get(uri)
+                                .with(user(user)))
+                        .andExpect(status().isForbidden())
+                        .andDo(print());
+        }
+    }
+
+    @Test
+    void create_statusIsCreatedOrElseForbidden_userRoleIsAdmin() throws Exception {
+        TeacherDTO teacher = new TeacherDTO.Builder().setFirstName("Bob").setLastName("Morley").setAge((byte) 22).build();
+        String uri = "/api/v1/teachers";
+        for (UserDetails user : testUsers) {
+            if (user.getAuthorities().stream()
+                    .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()))) {
+                mockMvc.perform(post(uri)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(asJsonString(teacher))
+                                .accept(MediaType.APPLICATION_JSON)
+                                .with(user(user)))
+                        .andExpect(status().isCreated())
+                        .andDo(print());
+            } else
+                mockMvc.perform(post(uri)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(asJsonString(teacher))
+                                .accept(MediaType.APPLICATION_JSON)
+                                .with(user(user)))
+                        .andExpect(status().isForbidden())
+                        .andDo(print());
+        }
+    }
+
+    @Test
+    void update_statusIsOkOrElseForbidden_userRoleIsAdmin() throws Exception {
+        TeacherDTO teacher = new TeacherDTO.Builder().setId(id).setFirstName("NewName").setLastName("NewLastName").setAge((byte) 22).build();
+        String uri = String.format("/api/v1/teachers/%d", teacher.getId());
+        for (UserDetails user : testUsers) {
+            if (user.getAuthorities().stream()
+                    .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()))) {
+                mockMvc.perform(put(uri)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(asJsonString(teacher))
+                                .accept(MediaType.APPLICATION_JSON)
+                                .with(user(user)))
+                        .andExpect(status().isOk())
+                        .andDo(print());
+            } else
+                mockMvc.perform(put(uri)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(asJsonString(teacher))
+                                .accept(MediaType.APPLICATION_JSON)
+                                .with(user(user)))
+                        .andExpect(status().isForbidden())
+                        .andDo(print());
+        }
+    }
+
+    @Test
+    void delete_statusIsOkOrElseForbidden_userRoleIsAdmin() throws Exception {
+        String uri = String.format("/api/v1/teachers/%d", id);
+        for (UserDetails user : testUsers) {
+            if (user.getAuthorities().stream()
+                    .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()))) {
+                mockMvc.perform(delete(uri)
+                                .with(user(user)))
+                        .andExpect(status().isNoContent())
+                        .andDo(print());
+            } else
+                mockMvc.perform(get(uri)
+                                .with(user(user)))
+                        .andExpect(status().isForbidden())
+                        .andDo(print());
+        }
     }
 
 }
