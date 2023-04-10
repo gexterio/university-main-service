@@ -47,7 +47,7 @@ public class LessonsRestController {
                     @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json")}, description = "Operation execute successfully"),
             })
     @GetMapping("/students/{id}/lessons")
-    @PreAuthorize("@studentPersonalInfoSecurityChecker.checkStudentId(authentication,#id)")
+    @PreAuthorize("hasRole('ADMIN') or @studentPersonalInfoSecurityChecker.checkStudentId(authentication,#id)")
     public List<LessonDTO> findLessonsForStudent(@PathVariable("id") Long id,
                                                  @RequestParam("range") @TimeRange String range,
                                                  @RequestParam("isoDate")
