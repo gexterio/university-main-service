@@ -12,8 +12,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
-import ua.com.foxminded.university.presentation.controller.StudentRestController;
 import ua.com.foxminded.university.consumer.service.StudentService;
+import ua.com.foxminded.university.consumer.service.UserService;
+import ua.com.foxminded.university.presentation.controller.StudentRestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ class StudentsRestControllerTest {
 
     @MockBean
     StudentService service;
+    @MockBean
+    UserService userService;
 
     @Autowired
     MockMvc mockMvc;

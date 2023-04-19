@@ -258,4 +258,40 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
         }
     }
 
+    @Test
+    void getTransactions_statusIsOkOrElseForbidden_userRoleIsStudentWithEqualsReferenceId() throws Exception {
+        String uri = String.format("/api/v1/students/%d/transactions", id);
+        for (UserDetails user : testUsers) {
+            if (user.getAuthorities().stream()
+                    .anyMatch(auth -> "ROLE_TEACHER".equals(auth.getAuthority()))) {
+                mockMvc.perform(get(uri)
+                                .with(user(user)))
+                        .andExpect(status().isForbidden())
+                        .andDo(print());
+            } else
+                mockMvc.perform(get(uri)
+                                .with(user(user)))
+                        .andExpect(status().isOk())
+                        .andDo(print());
+        }
+    }
+
+    @Test
+    void getTransactions_statusIsForbidden_userRoleIsStudentWithNotEqualsReferenceId() throws Exception {
+        String uri = String.format("/api/v1/students/%d/transactions", 2);
+        for (UserDetails user : testUsers) {
+            if (user.getAuthorities().stream()
+                    .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()))) {
+                mockMvc.perform(get(uri)
+                                .with(user(user)))
+                        .andExpect(status().isOk())
+                        .andDo(print());
+            } else
+                mockMvc.perform(get(uri)
+                                .with(user(user)))
+                        .andExpect(status().isForbidden())
+                        .andDo(print());
+        }
+    }
+
 }
