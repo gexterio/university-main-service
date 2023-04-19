@@ -28,4 +28,10 @@ public class UserService implements UserDetailsService {
                 Collections.singleton(user.getRole())
         )).orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
+
+    public Long getIdByUsername(String username) {
+        return repository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username))
+                .getId();
+    }
 }

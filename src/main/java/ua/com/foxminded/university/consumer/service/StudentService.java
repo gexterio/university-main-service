@@ -9,14 +9,11 @@ import ua.com.foxminded.university.consumer.dto.StudentDTO;
 import ua.com.foxminded.university.consumer.exception.StudentAlreadyExistException;
 import ua.com.foxminded.university.consumer.exception.StudentNotFoundException;
 import ua.com.foxminded.university.persistance.repository.StudentRepository;
-import ua.com.foxminded.university.presentation.annotation.IsAdminRole;
-import ua.com.foxminded.university.presentation.annotation.IsTeacherOrAdminRole;
 import ua.com.foxminded.university.util.modelmapper.StudentMapper;
 
 import java.util.Optional;
 
 @Service
-@IsAdminRole
 public class StudentService {
 
     private final StudentRepository repository;
@@ -28,7 +25,6 @@ public class StudentService {
         this.mapper = mapper;
     }
 
-    @IsTeacherOrAdminRole
     public Page<StudentDTO> findAll(Pageable pageable) {
         return repository.findAll(pageable)
                 .map(mapper::toDto);
@@ -71,5 +67,11 @@ public class StudentService {
 
                 })
                 .orElseThrow(() -> new StudentNotFoundException(id));
+    }
+
+    public StudentDTO findByEmail(String email) {
+        return repository.findByEmail(email)
+                .map(mapper::toDto)
+                .orElseThrow(() -> new StudentNotFoundException(email));
     }
 }

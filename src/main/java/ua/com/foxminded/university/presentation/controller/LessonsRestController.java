@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.foxminded.university.consumer.dto.LessonDTO;
 import ua.com.foxminded.university.consumer.service.LessonService;
+import ua.com.foxminded.university.presentation.annotation.IsTeacherOrAdminRole;
 import ua.com.foxminded.university.util.validation.TimeRange;
 import ua.com.foxminded.university.util.validation.ZonedDateTimePattern;
 
@@ -71,6 +72,7 @@ public class LessonsRestController {
                     @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json")}, description = "Operation execute successfully"),
             })
     @GetMapping("/teachers/{id}/lessons")
+    @IsTeacherOrAdminRole
     public List<LessonDTO> findLessonsForTeacher(@PathVariable("id") Long id,
                                                  @RequestParam("range") @TimeRange String range,
                                                  @RequestParam("isoDate")
