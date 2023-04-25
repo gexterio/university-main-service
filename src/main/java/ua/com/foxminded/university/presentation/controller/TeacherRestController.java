@@ -21,14 +21,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
 import ua.com.foxminded.university.consumer.service.TeacherService;
-import ua.com.foxminded.university.consumer.service.UserService;
+import ua.com.foxminded.university.consumer.service.TransactionService;
 import ua.com.foxminded.university.presentation.annotation.IsAdminRole;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("/api/v1/teachers")
@@ -37,12 +33,12 @@ import java.net.URISyntaxException;
 public class TeacherRestController {
 
     private final TeacherService service;
-    private final UserService userService;
+    private final TransactionService transactionService;
 
     @Autowired
-    public TeacherRestController(TeacherService service, UserService userService) {
+    public TeacherRestController(TeacherService service, TransactionService transactionService) {
         this.service = service;
-        this.userService = userService;
+        this.transactionService = transactionService;
     }
 
     @Operation(summary = "Get operation for all Teachers",
@@ -115,13 +111,7 @@ public class TeacherRestController {
     @GetMapping("/{id}/transactions")
     @PreAuthorize("hasRole('ADMIN') or @teacherPersonalInfoSecurityChecker.checkTeacherId(authentication,#id)")
     public ResponseEntity<Object> getTransactions(@PathVariable("id") Long id) {
-        Long userId = userService.getIdByUsername(service.findById(id).getEmail());
-        String url = String.format("http://localhost:8081/api/v2/users/%s/transactions", userId);
-        try {
-            return new RestTemplate().getForEntity(new URI(url), Object.class);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+        return new ResponseEntity<>(transactionService.getTransactionsForTeacher(id), HttpStatus.OK);
     }
 }
 
