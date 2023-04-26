@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import ua.com.foxminded.university.util.validation.AdultTeacher;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -40,7 +39,6 @@ public class TeacherDTO {
     private Integer experience;
 
     @Schema(description = "The email of the Teacher", format = "email", example = "nikVolkov@example.com")
-    @Max(64)
     @Email
     private String email;
 

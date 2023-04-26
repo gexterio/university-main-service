@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
-import ua.com.foxminded.university.persistance.repository.StudentRepository;
 import ua.com.foxminded.university.consumer.exception.StudentAlreadyExistException;
 import ua.com.foxminded.university.consumer.exception.StudentNotFoundException;
+import ua.com.foxminded.university.persistance.repository.StudentRepository;
 import ua.com.foxminded.university.util.modelmapper.StudentMapper;
 
 import java.util.Optional;
@@ -67,5 +67,11 @@ public class StudentService {
 
                 })
                 .orElseThrow(() -> new StudentNotFoundException(id));
+    }
+
+    public StudentDTO findByEmail(String email) {
+        return repository.findByEmail(email)
+                .map(mapper::toDto)
+                .orElseThrow(() -> new StudentNotFoundException(email));
     }
 }

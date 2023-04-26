@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +23,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
 import ua.com.foxminded.university.consumer.service.TeacherService;
+import ua.com.foxminded.university.consumer.service.TransactionService;
+import ua.com.foxminded.university.presentation.annotation.IsAdminRole;
 
 @RestController
 @RequestMapping("/api/v1/teachers")
 @Validated
+@IsAdminRole
 public class TeacherRestController {
 
     private final TeacherService service;
+    private final TransactionService transactionService;
 
     @Autowired
-    public TeacherRestController(TeacherService service) {
+    public TeacherRestController(TeacherService service, TransactionService transactionService) {
         this.service = service;
+        this.transactionService = transactionService;
     }
 
     @Operation(summary = "Get operation for all Teachers",
@@ -101,6 +107,12 @@ public class TeacherRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
         return new ResponseEntity<>(service.delete(id), HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{id}/transactions")
+    @PreAuthorize("hasRole('ADMIN') or @teacherPersonalInfoSecurityChecker.checkTeacherId(authentication,#id)")
+    public ResponseEntity<Object> getTransactions(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(transactionService.getTransactionsForTeacher(id), HttpStatus.OK);
     }
 }
 

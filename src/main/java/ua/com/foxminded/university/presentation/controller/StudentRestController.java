@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,17 +21,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
 import ua.com.foxminded.university.consumer.service.StudentService;
+import ua.com.foxminded.university.consumer.service.TransactionService;
+import ua.com.foxminded.university.presentation.annotation.IsAdminRole;
+import ua.com.foxminded.university.presentation.annotation.IsTeacherOrAdminRole;
 
 
 @RestController
 @RequestMapping("/api/v1/students")
+@IsAdminRole
 public class StudentRestController {
 
     private final StudentService service;
+    public final TransactionService transactionService;
 
     @Autowired
-    public StudentRestController(StudentService service) {
+    public StudentRestController(StudentService service, TransactionService transactionService) {
         this.service = service;
+        this.transactionService = transactionService;
     }
 
     @Operation(summary = "Get operation for all Students",
@@ -41,6 +48,7 @@ public class StudentRestController {
                     @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json")}, description = "Students received successfully")
             })
     @GetMapping()
+    @IsTeacherOrAdminRole
     public Page<StudentDTO> findAll(Pageable pageable) {
         return service.findAll(pageable);
     }
@@ -98,6 +106,12 @@ public class StudentRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
         return new ResponseEntity<>(service.delete(id), HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{id}/transactions")
+    @PreAuthorize("hasRole('ADMIN') or @studentPersonalInfoSecurityChecker.checkStudentId(authentication,#id)")
+    public ResponseEntity<Object> getTransactions(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(transactionService.getTransactionsForStudent(id), HttpStatus.OK);
     }
 }
 

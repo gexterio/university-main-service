@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.university.consumer.dto.TeacherDTO;
+import ua.com.foxminded.university.consumer.exception.TeacherAlreadyExistException;
 import ua.com.foxminded.university.consumer.exception.TeacherNotFoundException;
 import ua.com.foxminded.university.persistance.repository.TeacherRepository;
-import ua.com.foxminded.university.consumer.exception.TeacherAlreadyExistException;
 import ua.com.foxminded.university.util.modelmapper.TeacherMapper;
 
 import java.util.Optional;
@@ -69,4 +69,9 @@ public class TeacherService {
     }
 
 
+    public TeacherDTO findByEmail(String email) {
+        return repository.findByEmail(email)
+                .map(mapper::toDto)
+                .orElseThrow(() -> new TeacherNotFoundException(email));
+    }
 }
