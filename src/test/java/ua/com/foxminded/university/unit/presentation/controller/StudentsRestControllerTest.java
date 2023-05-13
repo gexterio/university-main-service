@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.com.foxminded.university.consumer.dto.StudentDTO;
 import ua.com.foxminded.university.consumer.service.StudentService;
+import ua.com.foxminded.university.consumer.service.TransactionService;
 import ua.com.foxminded.university.consumer.service.UserService;
 import ua.com.foxminded.university.presentation.controller.StudentRestController;
 
@@ -32,6 +33,10 @@ class StudentsRestControllerTest {
 
     @MockBean
     StudentService service;
+
+    @MockBean
+    TransactionService transactionService;
+
     @MockBean
     UserService userService;
 
