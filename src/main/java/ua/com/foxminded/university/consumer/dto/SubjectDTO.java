@@ -1,17 +1,27 @@
 package ua.com.foxminded.university.consumer.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import ua.com.foxminded.university.persistance.model.SubjectEntity;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
+@Schema(description = "Subject entity")
 public class SubjectDTO {
 
-
+    @Schema(description = "The id of the Subject", example = "123")
     private Long id;
 
+    @Schema(description = "The name of the Subject", minimum = "3", maximum = "64", example = "Mathematics")
+    @NotBlank
+    @Size(min = 3, max = 64)
     private String name;
 
+    @Schema(description = "The description of the Subject", maximum = "256", example = "Mathematicians have always been fascinated by numbers")
+    @Max(256)
     private String description;
 
     public SubjectDTO() {

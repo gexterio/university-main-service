@@ -1,16 +1,33 @@
 package ua.com.foxminded.university.consumer.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import ua.com.foxminded.university.util.validation.NotPast;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
+@Schema(description = "Lesson entity")
 public class LessonDTO {
 
+    @Schema(description = "The id of the Lesson", example = "123")
     private Long id;
 
+    @Schema(description = "The name of the Lesson", minimum = "3", maximum = "64", example = "Web Development Fundamentals")
+    @NotBlank
+    @Size(min = 3, max = 64)
     private String name;
 
+    @Schema(description = "duration of the Lesson in minutes", minimum = "1", example = "60")
+    @NotNull
+    @Positive
     private Integer duration;
 
+    @Schema(description = "The start time of the Lesson", example = "2023-02-21T20:33:02.716164+00:00")
+    @NotPast
     private ZonedDateTime startTime;
 
     private SubjectDTO subject;

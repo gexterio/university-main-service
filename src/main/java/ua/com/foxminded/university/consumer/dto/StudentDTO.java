@@ -1,22 +1,46 @@
 package ua.com.foxminded.university.consumer.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import ua.com.foxminded.university.persistance.model.StudentEntity;
+import ua.com.foxminded.university.util.validation.AdultStudent;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
+@Schema(description = "Student entity")
 public class StudentDTO {
+
+
+    @Schema(description = "The id of the Student", example = "123")
     private Long id;
 
+    @Schema(description = "The first name of the Student", example = "Adam")
+    @NotBlank
+    @Size(min = 3, max = 32)
     private String firstName;
 
+    @Schema(description = "The last name of the Student", example = "Moore")
+    @NotBlank
+    @Size(min = 3, max = 32)
     private String lastName;
 
+    @Schema(minimum = "18", type = "integer", description = "The age of the Student", example = "19")
+    @AdultStudent
     private Byte age;
 
     private GroupDTO group;
 
+    @Schema(minimum = "1", type = "integer", description = "The course of the Student", example = "2")
+    @NotNull
+    @Positive
     private Byte course;
 
+    @Schema(format = "email", description = "The email of the Student", example = "adam.moore@example.com")
+    @Email
     private String email;
 
     public StudentDTO() {
@@ -163,7 +187,6 @@ public class StudentDTO {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", group=" + group.getName() +
                 ", course=" + course +
                 ", email='" + email + '\'' +
                 '}';

@@ -1,11 +1,20 @@
 package ua.com.foxminded.university.consumer.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import ua.com.foxminded.university.util.validation.GroupNamePattern;
+
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
+@Schema(description = "Group entity")
 public class GroupDTO {
 
+    @Schema(description = "The id of the Group", example = "123")
     private Long id;
 
+    @Schema(format = "regex [A-Z{2}-/d{2}", description = "The name of the Group", example = "AB-12")
+    @NotBlank
+    @GroupNamePattern
     private String name;
 
     private FacultyDTO faculty;

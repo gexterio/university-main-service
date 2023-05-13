@@ -1,17 +1,47 @@
 package ua.com.foxminded.university.consumer.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import ua.com.foxminded.university.util.validation.AdultTeacher;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
+@Schema(description = "Teacher entity")
 public class TeacherDTO {
 
+    @Schema(description = "The id of the Teacher", example = "123")
     private Long id;
+
+    @Schema(description = "The first name of the Teacher", minimum = "3", maximum = "64", example = "Nik")
+    @NotBlank
+    @Size(min = 3, max = 32)
     private String firstName;
+
+    @Schema(description = "The last name of the Teacher", minimum = "3", maximum = "64", example = "Volkov")
+    @NotBlank
+    @Size(min = 3, max = 32)
     private String lastName;
+
+    @Schema(type = "integer", description = "The age of the Teacher", minimum = "21", example = "53")
+    @AdultTeacher
     private Byte age;
+
+    @Schema(description = "The grade of the Teacher", minimum = "3", maximum = "32", example = "Master's Degree")
+    @Size(min = 3, max = 32)
     private String grade;
+
+    @Schema(description = "The experience of the Teacher in years", minimum = "1", example = "8")
+    @Positive
     private Integer experience;
+
+    @Schema(description = "The email of the Teacher", format = "email", example = "nikVolkov@example.com")
+    @Email
     private String email;
+
     private FacultyDTO faculty;
 
 

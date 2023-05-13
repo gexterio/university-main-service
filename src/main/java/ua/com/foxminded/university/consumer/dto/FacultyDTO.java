@@ -1,13 +1,28 @@
 package ua.com.foxminded.university.consumer.dto;
 
+ import io.swagger.v3.oas.annotations.media.Schema;
 import ua.com.foxminded.university.persistance.model.FacultyEntity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
+@Schema(description = "Faculty entity")
 public class FacultyDTO {
 
+    @Schema(description = "The id of the Faculty", example = "123")
     private Long id;
+
+    @Schema(description = "The name of the Faculty", minimum = "3", maximum = "64", example = "Management")
+    @NotBlank
+    @Size(min = 3, max = 64)
     private String name;
+
+    @Schema(description = "The duration of the Faculty in years", minimum = "1", example = "4")
+    @NotNull
+    @Positive
     private Integer duration;
 
     public FacultyDTO() {
