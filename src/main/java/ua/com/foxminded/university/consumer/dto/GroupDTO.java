@@ -1,63 +1,47 @@
 package ua.com.foxminded.university.consumer.dto;
 
-import ua.com.foxminded.university.persistance.models.GroupEntity;
-
 import java.util.Objects;
 
 public class GroupDTO {
 
-    private Long iD;
+    private Long id;
 
     private String name;
 
-    private Long facultyID;
+    private FacultyDTO faculty;
 
-    private String facultyName;
 
     public GroupDTO() {
     }
 
-    public GroupDTO(GroupDTOBuilder builder) {
-        this.iD = builder.iD;
+    public GroupDTO(Builder builder) {
+        this.id = builder.id;
         this.name = builder.name;
-        this.facultyID = builder.facultyID;
-        this.facultyName = builder.facultyName;
+        this.faculty = builder.faculty;
     }
 
-    public GroupDTO(GroupEntity entity) {
-        this.iD = entity.getID();
-        this.name = entity.getName();
-        this.facultyID = entity.getFacultyID();
-    }
+    public static class Builder {
 
-    public static class GroupDTOBuilder {
-
-        private Long iD;
+        private Long id;
 
         private String name;
 
-        private Long facultyID;
-
-        private String facultyName;
+        private FacultyDTO faculty;
 
 
-        public GroupDTOBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public GroupDTOBuilder setFacultyID(Long iD) {
-            this.facultyID = iD;
+
+        public Builder setId(Long id) {
+            this.id = id;
             return this;
         }
 
-        public GroupDTOBuilder setFacultyName(String facultyName) {
-            this.facultyName = facultyName;
-            return this;
-        }
-
-        public GroupDTOBuilder setID(Long iD) {
-            this.iD = iD;
+        public Builder setFaculty(FacultyDTO faculty) {
+            this.faculty = faculty;
             return this;
         }
 
@@ -66,12 +50,12 @@ public class GroupDTO {
         }
     }
 
-    public Long getID() {
-        return iD;
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long iD) {
-        this.iD = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -82,30 +66,12 @@ public class GroupDTO {
         this.name = name;
     }
 
-    public Long getFacultyID() {
-        return facultyID;
+    public FacultyDTO getFaculty() {
+        return faculty;
     }
 
-    public void setFacultyID(Long facultyID) {
-        this.facultyID = facultyID;
-    }
-
-    public String getFacultyName() {
-        return facultyName;
-    }
-
-    public void setFacultyName(String facultyName) {
-        this.facultyName = facultyName;
-    }
-
-    @Override
-    public String toString() {
-        return "GroupDTO{" +
-                "iD=" + iD +
-                ", name='" + name + '\'' +
-                ", facultyID=" + facultyID +
-                ", facultyName='" + facultyName + '\'' +
-                '}';
+    public void setFaculty(FacultyDTO faculty) {
+        this.faculty = faculty;
     }
 
     @Override
@@ -113,11 +79,20 @@ public class GroupDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupDTO groupDTO = (GroupDTO) o;
-        return Objects.equals(iD, groupDTO.iD) && Objects.equals(name, groupDTO.name) && Objects.equals(facultyID, groupDTO.facultyID) && Objects.equals(facultyName, groupDTO.facultyName);
+        return Objects.equals(id, groupDTO.id) && Objects.equals(name, groupDTO.name) && Objects.equals(faculty, groupDTO.faculty);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iD, name, facultyID, facultyName);
+        return Objects.hash(id, name, faculty);
+    }
+
+    @Override
+    public String toString() {
+        return "GroupDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", faculty=" + faculty +
+                '}';
     }
 }

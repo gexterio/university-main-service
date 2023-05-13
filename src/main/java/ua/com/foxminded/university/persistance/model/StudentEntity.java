@@ -1,29 +1,50 @@
-package ua.com.foxminded.university.consumer.dto;
+package ua.com.foxminded.university.persistance.model;
 
-import ua.com.foxminded.university.persistance.model.StudentEntity;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Objects;
 
-public class StudentDTO {
+@Entity
+@Table(name = "students")
+public class StudentEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "age")
     private Byte age;
 
-    private GroupDTO group;
-
-    private Byte course;
-
+    @Column(name = "email")
     private String email;
 
-    public StudentDTO() {
+    @Column(name = "course")
+    private Byte course;
+
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_id")
+    private GroupEntity group;
+
+    public StudentEntity() {
 
     }
 
-    public StudentDTO(Builder builder) {
+    public StudentEntity(Builder builder) {
         this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
@@ -33,40 +54,25 @@ public class StudentDTO {
         this.email = builder.email;
     }
 
-    public StudentDTO(StudentEntity entity) {
-        this.id = entity.getId();
-        this.firstName = entity.getFirstName();
-        this.lastName = entity.getLastName();
-        this.age = entity.getAge();
-        this.course = entity.getCourse();
-        this.email = entity.getEmail();
-    }
-
     public static class Builder {
-
         private Long id;
 
-        private String firstName;
+        private final String firstName;
 
-        private String lastName;
+        private final String lastName;
 
         private Byte age;
 
-        private GroupDTO group;
+        private GroupEntity group;
 
         private Byte course;
 
         private String email;
 
 
-        public Builder setFirstName(String firstName) {
+        public Builder(String firstName, String lastName) {
             this.firstName = firstName;
-            return this;
-        }
-
-        public Builder setLastName(String lastName) {
             this.lastName = lastName;
-            return this;
         }
 
         public Builder setId(Long id) {
@@ -79,7 +85,7 @@ public class StudentDTO {
             return this;
         }
 
-        public Builder setGroup(GroupDTO group) {
+        public Builder setGroup(GroupEntity group) {
             this.group = group;
             return this;
         }
@@ -94,8 +100,8 @@ public class StudentDTO {
             return this;
         }
 
-        public StudentDTO build() {
-            return new StudentDTO(this);
+        public StudentEntity build() {
+            return new StudentEntity(this);
         }
     }
 
@@ -131,12 +137,11 @@ public class StudentDTO {
         this.age = age;
     }
 
-    public GroupDTO getGroup() {
+    public GroupEntity getGroup() {
         return group;
     }
 
-
-    public void setGroup(GroupDTO group) {
+    public void setGroup(GroupEntity group) {
         this.group = group;
     }
 
@@ -157,29 +162,28 @@ public class StudentDTO {
     }
 
     @Override
-    public String toString() {
-        return "StudentDTO{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", group=" + group.getName() +
-                ", course=" + course +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentDTO that = (StudentDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(group, that.group) && Objects.equals(course, that.course) && Objects.equals(email, that.email);
+        StudentEntity that = (StudentEntity) o;
+        return Objects.equals(id, that.id) && firstName.equals(that.firstName) && lastName.equals(that.lastName) && Objects.equals(age, that.age) && Objects.equals(email, that.email) && Objects.equals(course, that.course);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age, group, course, email);
+        return Objects.hash(id, firstName, lastName, age, email, course);
+    }
+
+    @Override
+    public String
+    toString() {
+        return "StudentEntity{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", course=" + course +
+                '}';
     }
 }
-

@@ -1,24 +1,60 @@
-package ua.com.foxminded.university.consumer.dto;
+package ua.com.foxminded.university.persistance.model;
 
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class TeacherDTO {
-
+@Entity
+@Table(name = "teachers")
+public class TeacherEntity {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "age")
     private Byte age;
+
+    @Column(name = "grade")
     private String grade;
+
+    @Column(name = "experience")
     private Integer experience;
+
+    @Column(name = "email")
     private String email;
-    private FacultyDTO faculty;
 
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "faculty_id")
+    private FacultyEntity faculty;
 
-    public TeacherDTO() {
+    @OneToMany(mappedBy = "teacher",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<LessonEntity> lessons = new ArrayList<>();
+
+    public TeacherEntity() {
     }
 
-    public TeacherDTO(Builder builder) {
+    public TeacherEntity(Builder builder) {
         this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
@@ -27,36 +63,28 @@ public class TeacherDTO {
         this.experience = builder.experience;
         this.email = builder.email;
         this.faculty = builder.faculty;
+        this.lessons = builder.lessons;
     }
 
     public static class Builder {
         private Long id;
-        private String firstName;
-        private String lastName;
+        private final String firstName;
+        private final String lastName;
         private Byte age;
         private String grade;
         private Integer experience;
         private String email;
-        private FacultyDTO faculty;
+        private FacultyEntity faculty;
+        private List<LessonEntity> lessons = new ArrayList<>();
 
+
+        public Builder(String firstName, String lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
 
         public Builder setId(Long id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder setFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder setFaculty(FacultyDTO faculty) {
-            this.faculty = faculty;
-            return this;
-        }
-
-        public Builder setLastName(String lastName) {
-            this.lastName = lastName;
             return this;
         }
 
@@ -80,9 +108,18 @@ public class TeacherDTO {
             return this;
         }
 
+        public Builder setFaculty(FacultyEntity faculty) {
+            this.faculty = faculty;
+            return this;
+        }
 
-        public TeacherDTO build() {
-            return new TeacherDTO(this);
+        public Builder setLessons(List<LessonEntity> lessons) {
+            this.lessons = lessons;
+            return this;
+        }
+
+        public TeacherEntity build() {
+            return new TeacherEntity(this);
         }
     }
 
@@ -142,30 +179,38 @@ public class TeacherDTO {
         this.email = email;
     }
 
-    public FacultyDTO getFaculty() {
+    public FacultyEntity getFaculty() {
         return faculty;
     }
 
-    public void setFaculty(FacultyDTO faculty) {
+    public void setFaculty(FacultyEntity faculty) {
         this.faculty = faculty;
+    }
+
+    public List<LessonEntity> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<LessonEntity> lessons) {
+        this.lessons = lessons;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TeacherDTO that = (TeacherDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(grade, that.grade) && Objects.equals(experience, that.experience) && Objects.equals(email, that.email) && Objects.equals(faculty, that.faculty);
+        TeacherEntity that = (TeacherEntity) o;
+        return Objects.equals(id, that.id) && firstName.equals(that.firstName) && lastName.equals(that.lastName) && Objects.equals(age, that.age) && Objects.equals(grade, that.grade) && Objects.equals(experience, that.experience) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age, grade, experience, email, faculty);
+        return Objects.hash(id, firstName, lastName, age, grade, experience, email);
     }
 
     @Override
     public String toString() {
-        return "TeacherDTO{" +
+        return "TeacherEntity{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -173,7 +218,6 @@ public class TeacherDTO {
                 ", grade='" + grade + '\'' +
                 ", experience=" + experience +
                 ", email='" + email + '\'' +
-                ", faculty=" + faculty +
                 '}';
     }
 }
