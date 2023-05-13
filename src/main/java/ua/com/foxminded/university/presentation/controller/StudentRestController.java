@@ -63,6 +63,7 @@ public class StudentRestController {
                     @ApiResponse(responseCode = "404", description = "Student not found", content = {@Content(mediaType = "application/json")})
             })
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or @studentPersonalInfoSecurityChecker.checkStudentId(authentication, #id)")
     public ResponseEntity<StudentDTO> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }

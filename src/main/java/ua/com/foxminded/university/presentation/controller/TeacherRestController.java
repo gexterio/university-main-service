@@ -63,6 +63,7 @@ public class TeacherRestController {
                     @ApiResponse(responseCode = "404", description = "Teacher not found", content = {@Content(mediaType = "application/json")})
             })
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or @teacherPersonalInfoSecurityChecker.checkTeacherId(authentication,#id)")
     public ResponseEntity<TeacherDTO> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
