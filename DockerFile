@@ -1,5 +1,7 @@
 FROM amazoncorretto:11
-WORKDIR /university-app
-COPY . .
-RUN mvn clean install
-CMD mvn spring-boot:run
+LABEL maintainer="gexterio@gmail.com"
+WORKDIR /app
+COPY target/university-0.0.1-SNAPSHOT.jar university.jar
+ENTRYPOINT java -jar university.jar
+EXPOSE 8080
+VOLUME /university/data

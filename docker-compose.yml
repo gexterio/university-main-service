@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+
+  university-client:
+    build:
+      context: ../university
+      dockerfile: ./DockerFile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - university-db
+    environment:
+      - "spring.datasource.url=jdbc:postgresql://university-db:5432/postgres"
+      - "spring.datasource.user=postgres"
+      - "spring.datasource.password=pass"
+
+  mtrest-client:
+    build:
+      context: ../mtrestclient
+      dockerfile: ./DockerFile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mtrest-db
+    environment:
+      - "spring.datasource.url=jdbc:postgresql://mtrest-db:5432/postgres"
+      - "spring.datasource.user=postgres"
+      - "spring.datasource.password=pass"
+
+  university-db:
+    image: postgres:15.1
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=postgres
+
+  mtrest-db:
+    image: postgres:15.1
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=postgres
