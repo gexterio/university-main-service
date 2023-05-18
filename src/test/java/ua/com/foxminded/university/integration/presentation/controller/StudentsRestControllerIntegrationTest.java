@@ -173,19 +173,19 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
     }
 
     @Test
-    void findById_statusIsOkOrElseForbidden_userRoleIsAdmin() throws Exception {
+    void findById_statusIsOkOrElseForbidden_userRoleIsAdminOrStudent() throws Exception {
         String uri = String.format("/api/v1/students/%d", id);
         for (UserDetails user : testUsers) {
             if (user.getAuthorities().stream()
-                    .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()))) {
+                    .anyMatch(auth -> "ROLE_TEACHER".equals(auth.getAuthority()))) {
                 mockMvc.perform(get(uri)
                                 .with(user(user)))
-                        .andExpect(status().isOk())
+                        .andExpect(status().isForbidden())
                         .andDo(print());
             } else
                 mockMvc.perform(get(uri)
                                 .with(user(user)))
-                        .andExpect(status().isForbidden())
+                        .andExpect(status().isOk())
                         .andDo(print());
         }
     }
@@ -250,11 +250,7 @@ class StudentsRestControllerIntegrationTest extends RestControllerIntegrationTes
                                 .with(user(user)))
                         .andExpect(status().isNoContent())
                         .andDo(print());
-            } else
-                mockMvc.perform(get(uri)
-                                .with(user(user)))
-                        .andExpect(status().isForbidden())
-                        .andDo(print());
+            }
         }
     }
 
